@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# version-label-audit-20261021-v3
-# navigation-v1-20261021: menu only; host caches install separately
+# doesitworknow-activate-20261122-v1
+# navigation-v2: auto FW detect + personal shell; host caches install separately
 
 CACHE:
 ./
