@@ -1,443 +1,216 @@
 <!DOCTYPE html>
 <html lang="pt" manifest="navigation.manifest">
 <head>
-    <link rel="icon" type="image/png" href="pspulse.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <title>doesitworknow // activate</title>
-    <meta name="description" content="Host PS4 pessoal — detecta firmware e abre o exploit certo.">
+    <title>doesitworknow</title>
+    <link rel="icon" type="image/png" href="pspulse.png">
     <style>
-        :root {
-            --bg: #0b0f0c;
-            --bg-2: #121a14;
-            --panel: #152019;
-            --line: #2a3a2f;
-            --line-bright: #3d5344;
-            --text: #e8f0ea;
-            --muted: #9bb0a1;
-            --dim: #6f8375;
-            --accent: #7dffb3;
-            --accent-2: #c8f542;
-            --ok: #7dffb3;
-            --warn: #f0c674;
-            --bad: #ff8e8e;
-        }
-
-        * { box-sizing: border-box; }
-        html { background: var(--bg); }
-        html, body { margin: 0; min-height: 100%; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; }
         body {
-            background:
-                radial-gradient(ellipse 80% 55% at 50% -10%, rgba(125, 255, 179, 0.12), transparent 55%),
-                linear-gradient(180deg, #0e1511 0%, var(--bg) 45%, #080b09 100%);
-            color: var(--text);
-            font: 16px/1.45 Consolas, "Courier New", monospace;
-            min-height: 100vh;
+            background: #111827;
+            color: #fff;
+            font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
         a { color: inherit; text-decoration: none; }
 
-        .shell {
-            margin: 0 auto;
-            max-width: 760px;
-            min-height: 100vh;
-            padding: 28px 22px 40px;
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: flex;
-            -webkit-box-orient: vertical;
-            -webkit-flex-direction: column;
-            flex-direction: column;
-        }
-
-        .brand {
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            font-size: 12px;
-            color: var(--accent);
-            margin: 0 0 10px;
-            opacity: 0;
-            -webkit-animation: fadeUp 0.55s ease forwards;
-            animation: fadeUp 0.55s ease forwards;
-        }
-        .brand span { color: var(--dim); letter-spacing: 0.08em; text-transform: none; }
-
-        h1 {
-            font-size: clamp(34px, 8vw, 56px);
-            font-weight: 400;
-            letter-spacing: -0.04em;
-            line-height: 0.95;
-            margin: 0;
-            opacity: 0;
-            -webkit-animation: fadeUp 0.55s ease 0.08s forwards;
-            animation: fadeUp 0.55s ease 0.08s forwards;
-        }
-        h1 em {
-            font-style: normal;
-            color: var(--accent-2);
-        }
-
-        .tagline {
-            color: var(--muted);
-            margin: 14px 0 0;
-            max-width: 34em;
-            opacity: 0;
-            -webkit-animation: fadeUp 0.55s ease 0.14s forwards;
-            animation: fadeUp 0.55s ease 0.14s forwards;
-        }
-
-        .panel {
-            background: var(--panel);
-            border: 1px solid var(--line);
-            margin-top: 28px;
-            padding: 18px 18px 16px;
-            opacity: 0;
-            -webkit-animation: fadeUp 0.55s ease 0.2s forwards;
-            animation: fadeUp 0.55s ease 0.2s forwards;
-        }
-
-        .panel-label {
-            color: var(--dim);
-            font-size: 11px;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            margin: 0 0 14px;
-        }
-
-        .status-row {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: flex;
-            -webkit-box-pack: justify;
-            -webkit-justify-content: space-between;
-            justify-content: space-between;
-            -webkit-box-align: baseline;
-            -webkit-align-items: baseline;
-            align-items: baseline;
-            margin: 0 0 10px;
-            gap: 12px;
-        }
-        .status-key { color: var(--muted); font-size: 13px; }
-        .status-val { color: var(--text); font-size: 18px; text-align: right; }
-        .status-val.ok { color: var(--ok); }
-        .status-val.warn { color: var(--warn); }
-        .status-val.bad { color: var(--bad); }
-
-        .hint {
-            border-top: 1px solid var(--line);
-            color: var(--dim);
-            font-size: 13px;
-            margin-top: 14px;
-            padding-top: 12px;
-        }
-
-        .cta {
-            display: block;
-            margin-top: 16px;
-            padding: 16px 18px;
-            background: var(--accent);
-            color: #06120c;
-            border: 0;
-            font: inherit;
-            font-size: 16px;
-            letter-spacing: 0.04em;
+        .screen {
+            min-height: 100%;
+            padding: 48px 24px 40px;
+            display: -webkit-box; display: -webkit-flex; display: flex;
+            -webkit-box-orient: vertical; -webkit-flex-direction: column; flex-direction: column;
+            -webkit-box-align: center; -webkit-align-items: center; align-items: center;
+            -webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
             text-align: center;
+        }
+
+        /* Logo */
+        .logo {
+            width: 192px; height: 192px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            display: -webkit-box; display: -webkit-flex; display: flex;
+            -webkit-box-align: center; -webkit-align-items: center; align-items: center;
+            -webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
+            -webkit-transition: background .3s; transition: background .3s;
+        }
+        .logo:hover { background: rgba(255,255,255,0.10); }
+        .logo svg { width: 128px; height: 128px; fill: #3b82f6; }
+        .logo.pulse svg { -webkit-animation: pulse 1.6s ease-in-out infinite; animation: pulse 1.6s ease-in-out infinite; }
+        @-webkit-keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+
+        h1 { font-size: 34px; font-weight: 700; letter-spacing: -.02em; margin-top: 22px; }
+        h1 span { color: #3b82f6; }
+
+        /* Status */
+        .status {
+            margin-top: 18px;
+            font-size: 18px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.70);
+        }
+        .status b { font-weight: 600; color: #fff; }
+        .ok   { color: #4ade80 !important; }
+        .warn { color: #fbbf24 !important; }
+        .bad  { color: #f87171 !important; }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            margin-top: 26px;
+            min-width: 260px;
+            padding: 16px 34px;
+            border: 0;
+            border-radius: 12px;
+            background: #2563eb;
+            color: #fff;
+            font: 600 20px/1.2 inherit;
+            font-family: inherit;
             cursor: pointer;
-            width: 100%;
-            -webkit-transition: background 0.15s ease, -webkit-transform 0.15s ease;
-            transition: background 0.15s ease, transform 0.15s ease;
+            -webkit-transition: background .2s; transition: background .2s;
         }
-        .cta:hover, .cta:focus {
-            background: var(--accent-2);
-            outline: 2px solid var(--accent-2);
-            outline-offset: 2px;
-        }
-        .cta[disabled], .cta.is-disabled {
-            background: #2a3830;
-            color: var(--dim);
-            cursor: default;
-            pointer-events: none;
-        }
-        .cta-sub {
+        .btn:hover, .btn:focus { background: #3b82f6; outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,.45); }
+        .btn[disabled] { background: #374151; color: rgba(255,255,255,0.45); cursor: default; box-shadow: none; }
+
+        /* Fallback list (only when detection fails) */
+        .fallback { display: none; margin-top: 26px; width: 100%; max-width: 440px; }
+        .fallback p { color: rgba(255,255,255,0.6); font-size: 14px; margin-bottom: 10px; }
+        .fallback a {
             display: block;
-            margin-top: 4px;
-            font-size: 12px;
-            opacity: 0.75;
-        }
-
-        .manual {
-            margin-top: 22px;
-            opacity: 0;
-            -webkit-animation: fadeUp 0.55s ease 0.28s forwards;
-            animation: fadeUp 0.55s ease 0.28s forwards;
-        }
-        .manual summary {
-            color: var(--muted);
-            cursor: pointer;
-            font-size: 13px;
-            letter-spacing: 0.08em;
-            list-style: none;
-            text-transform: uppercase;
-            padding: 8px 0;
-        }
-        .manual summary::-webkit-details-marker { display: none; }
-        .manual summary:before { content: "[+] "; color: var(--accent); }
-        .manual[open] summary:before { content: "[-] "; }
-
-        .routes { margin-top: 8px; }
-        .route {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: flex;
-            -webkit-box-align: center;
-            -webkit-align-items: center;
-            align-items: center;
-            border: 1px solid var(--line);
-            background: var(--bg-2);
+            background: #1f2937;
+            border-radius: 10px;
+            padding: 13px 16px;
             margin-bottom: 8px;
-            min-height: 58px;
-            padding: 10px 14px;
+            font-size: 17px;
+            text-align: left;
         }
-        .route:hover, .route:focus {
-            border-color: var(--accent);
-            outline: 0;
-        }
-        .route:focus {
-            box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
-        }
-        .route .fw { color: var(--text); font-size: 16px; }
-        .route .meta { color: var(--dim); display: block; font-size: 12px; margin-top: 2px; }
-        .route .go { color: var(--accent); margin-left: auto; font-size: 12px; padding-left: 12px; }
+        .fallback a span { float: right; color: rgba(255,255,255,0.5); font-size: 14px; }
+        .fallback a:hover, .fallback a:focus { background: #374151; outline: none; }
+        .fallback.show { display: block; }
 
-        .foot {
-            color: var(--dim);
-            font-size: 12px;
-            margin-top: auto;
-            padding-top: 28px;
-        }
-        .foot a { color: var(--muted); border-bottom: 1px solid var(--line); }
-        .foot a:hover, .foot a:focus { color: var(--accent); }
+        .ver { position: fixed; right: 16px; bottom: 12px; font-size: 12px; color: rgba(255,255,255,0.35); }
 
-        .scan {
-            color: var(--accent);
-            overflow: hidden;
-            white-space: nowrap;
-        }
-        .scan:after {
-            content: "▋";
-            -webkit-animation: blink 1s steps(1) infinite;
-            animation: blink 1s steps(1) infinite;
-        }
-
-        @-webkit-keyframes fadeUp {
-            from { opacity: 0; -webkit-transform: translateY(10px); }
-            to { opacity: 1; -webkit-transform: translateY(0); }
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @-webkit-keyframes blink {
-            50% { opacity: 0; }
-        }
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-
-        @media (max-width: 520px) {
-            .shell { padding: 18px 14px 28px; }
-            .status-val { font-size: 16px; }
+        @media (max-width: 480px) {
+            .logo { width: 150px; height: 150px; }
+            .logo svg { width: 100px; height: 100px; }
+            h1 { font-size: 28px; }
+            .btn { min-width: 0; width: 100%; }
         }
     </style>
 </head>
 <body>
-    <div class="shell">
-        <p class="brand">doesitworknow <span>// activate</span></p>
-        <h1>Activate<em>.</em></h1>
-        <p class="tagline">Detecta o firmware da PS4 e abre o host certo. Sem menus a mais.</p>
-
-        <section class="panel" aria-live="polite">
-            <p class="panel-label">Estado da consola</p>
-            <div class="status-row">
-                <span class="status-key">dispositivo</span>
-                <span class="status-val" id="dev">a analisar…</span>
-            </div>
-            <div class="status-row">
-                <span class="status-key">firmware</span>
-                <span class="status-val scan" id="fw">…</span>
-            </div>
-            <div class="status-row">
-                <span class="status-key">compatível</span>
-                <span class="status-val" id="compat">…</span>
-            </div>
-            <div class="status-row" id="route-row" style="display:none">
-                <span class="status-key">host</span>
-                <span class="status-val" id="route-name">—</span>
-            </div>
-
-            <button type="button" class="cta is-disabled" id="cta" disabled>
-                A aguardar detecção
-            </button>
-            <p class="hint" id="hint">Abre sempre com <b>http://</b> (não https) no browser da PS4.</p>
-        </section>
-
-        <details class="manual" id="manual">
-            <summary>Escolher firmware manualmente</summary>
-            <nav class="routes" id="routes" aria-label="Rotas de firmware"></nav>
-        </details>
-
-        <footer class="foot">
-            activate.doesitworknow.me · host offline pessoal<br>
-            Em casa: <a href="http://192.168.1.173/">http://192.168.1.173/</a>
-        </footer>
+<div class="screen">
+    <div class="logo pulse" id="logo">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M0.69116 21.9548C-0.506476 22.7935 -0.284724 24.2384 2.44769 25.1419C5.18011 26.0455 8.35603 26.2323 11.1505 25.729C11.0707 25.729 11.3102 25.729 11.1505 25.729V22.8774L8.43588 23.8C7.39792 24.1355 6.35997 24.2194 5.32202 23.9677C4.5236 23.7161 4.68328 23.2129 5.64139 22.7935L11.1505 20.7806V17.6774L3.48565 20.4452C2.52754 20.7806 1.56943 21.2839 0.69116 21.9548ZM19.2146 9.37419V17.5097C22.4881 19.1871 25.0431 17.5097 25.0431 13.1484C25.0431 8.70323 23.5261 6.69032 19.1348 5.09677C16.8193 4.25806 14.4241 3.50323 12.0288 3V27.2387L17.6178 29V8.61935C17.6178 7.69677 17.6178 7.02581 18.2565 7.27742C19.1348 7.52903 19.2146 8.45161 19.2146 9.37419ZM29.5941 20.0258C27.2787 19.1871 24.8036 18.8516 22.4083 19.1032C21.0779 19.1906 19.8294 19.5869 18.5759 20.0258V23.2968L23.7656 21.2839C24.8036 20.9484 25.8415 20.8645 26.8795 21.1161C27.6779 21.3677 27.5182 21.871 26.5601 22.2903L18.5759 25.3935V28.5806L29.5941 24.3032C30.3925 23.9677 31.1111 23.5484 31.7499 22.8774C32.3088 22.0387 32.0692 20.8645 29.5941 20.0258Z"/></svg>
     </div>
 
-    <script>
-        (function () {
-            // Prefer HTTP on PS4 public hosts (bin loader + fewer SSL failures).
-            try {
-                var ua0 = navigator.userAgent || "";
-                var isPs4 = ua0.indexOf("PlayStation 4") !== -1;
-                var host = location.hostname || "";
-                var isLan = /^(127\.|192\.168\.|10\.|172\.(1[6-9]|2\d|3[01])\.)/.test(host);
-                if (isPs4 && location.protocol === "https:" && !isLan) {
-                    location.replace("http://" + location.host + location.pathname + location.search);
-                    return;
-                }
-            } catch (e) {}
+    <h1>doesitworknow<span>.</span></h1>
 
-            var ROUTES = [
-                { min: 14.00, max: 14.02, href: "1400/goldhen.html", label: "FW 14.00–14.02", meta: "Afterglow · GoldHEN" },
-                { min: 13.02, max: 13.52, href: "1352/index.html", label: "FW 13.02–13.52", meta: "SlopKit GoldHEN" },
-                { min: 12.50, max: 13.00, href: "1300/index.html", label: "FW 12.50–13.00", meta: "SlopKit WebKit" },
-                { min: 11.00, max: 12.02, href: "1300/index.html", label: "FW 11.00–12.02", meta: "SlopKit WebKit" },
-                { min: 9.00, max: 9.60, href: "900/version-selector.html", label: "FW 9.00–9.60", meta: "PSFree / Lapse" },
-                { min: 7.00, max: 8.52, href: "700/version-selector.html", label: "FW 7.00–8.52", meta: "PSFree / Lapse" },
-                { min: 6.72, max: 6.72, href: "672/index.html", label: "FW 6.72", meta: "Host dedicado" },
-                { min: 6.00, max: 11.02, href: "css/version-selector.html", label: "FW 6.00–11.02", meta: "CSSFontFace" },
-                { min: 5.05, max: 5.05, href: "505/index.html", label: "FW 5.05", meta: "Host dedicado" }
-            ];
+    <div class="status">
+        <div>Dispositivo: <b id="dev">a detectar…</b></div>
+        <div>Firmware: <b id="fw">…</b></div>
+        <div>Compatível: <b id="compat">…</b></div>
+    </div>
 
-            // Manual menu order (stable, human-friendly) — keep CSS as optional path.
-            var MANUAL = [
-                ROUTES[0], ROUTES[1], ROUTES[2], ROUTES[3], ROUTES[4], ROUTES[5], ROUTES[6], ROUTES[8], ROUTES[7]
-            ];
+    <button type="button" class="btn" id="btn" disabled>A detectar…</button>
 
-            function isPS4() {
-                return (navigator.userAgent || "").indexOf("PlayStation 4") !== -1;
-            }
+    <div class="fallback" id="fallback">
+        <p>Escolhe o firmware manualmente:</p>
+        <div id="routes"></div>
+    </div>
+</div>
+<div class="ver">activate · v2</div>
 
-            function getFw() {
-                var ua = navigator.userAgent || "";
-                var m = ua.match(/PlayStation 4\/([0-9.]+)/);
-                if (m) return m[1];
-                var start = ua.indexOf("5.0 (") + 19;
-                var end = ua.indexOf(") Apple");
-                if (start > 18 && end > start) {
-                    return ua.substring(start, end).replace("layStation 4/", "").trim();
-                }
-                return null;
-            }
+<script>
+(function () {
+    // On PS4, prefer HTTP (certificates + bin loaders).
+    try {
+        var ua0 = navigator.userAgent || "";
+        var isLan = /^(127\.|192\.168\.|10\.|172\.(1[6-9]|2\d|3[01])\.)/.test(location.hostname || "");
+        if (ua0.indexOf("PlayStation 4") !== -1 && location.protocol === "https:" && !isLan &&
+            location.hostname.indexOf("github.io") === -1) {
+            location.replace("http://" + location.host + location.pathname + location.search);
+            return;
+        }
+    } catch (e) {}
 
-            function matchRoute(fwStr) {
-                var n = parseFloat(fwStr);
-                if (isNaN(n)) return null;
-                for (var i = 0; i < ROUTES.length; i++) {
-                    if (n >= ROUTES[i].min && n <= ROUTES[i].max) return ROUTES[i];
-                }
-                return null;
-            }
+    var ROUTES = [
+        { min: 14.00, max: 14.02, href: "1400/goldhen.html",          label: "14.00 – 14.02" },
+        { min: 13.02, max: 13.52, href: "1352/index.html",            label: "13.02 – 13.52" },
+        { min: 12.50, max: 13.00, href: "1300/index.html",            label: "12.50 – 13.00" },
+        { min: 11.00, max: 12.02, href: "1300/index.html",            label: "11.00 – 12.02" },
+        { min: 9.00,  max: 9.60,  href: "900/version-selector.html",  label: "9.00 – 9.60" },
+        { min: 7.00,  max: 8.52,  href: "700/version-selector.html",  label: "7.00 – 8.52" },
+        { min: 6.72,  max: 6.72,  href: "672/index.html",             label: "6.72" },
+        { min: 6.00,  max: 11.02, href: "css/version-selector.html",  label: "6.00 – 11.02 (CSS)" },
+        { min: 5.05,  max: 5.05,  href: "505/index.html",             label: "5.05" }
+    ];
 
-            function $(id) { return document.getElementById(id); }
+    function $(id) { return document.getElementById(id); }
+    function isPS4() { return (navigator.userAgent || "").indexOf("PlayStation 4") !== -1; }
+    function getFw() {
+        var ua = navigator.userAgent || "";
+        var m = ua.match(/PlayStation 4\/([0-9.]+)/);
+        if (m) return m[1];
+        var s = ua.indexOf("5.0 (") + 19, e = ua.indexOf(") Apple");
+        if (s > 18 && e > s) return ua.substring(s, e).replace("layStation 4/", "").trim();
+        return null;
+    }
+    function route(fw) {
+        var n = parseFloat(fw);
+        if (isNaN(n)) return null;
+        for (var i = 0; i < ROUTES.length; i++) if (n >= ROUTES[i].min && n <= ROUTES[i].max) return ROUTES[i];
+        return null;
+    }
+    function showFallback() {
+        var h = "";
+        for (var i = 0; i < ROUTES.length; i++)
+            h += '<a href="' + ROUTES[i].href + '">FW ' + ROUTES[i].label + '<span>abrir</span></a>';
+        $("routes").innerHTML = h;
+        $("fallback").className = "fallback show";
+    }
+    function set(id, text, cls) { var el = $(id); el.textContent = text; el.className = cls || ""; }
 
-            function setCta(enabled, label, sub, href) {
-                var btn = $("cta");
-                btn.innerHTML = label + (sub ? '<span class="cta-sub">' + sub + "</span>" : "");
-                if (enabled && href) {
-                    btn.disabled = false;
-                    btn.className = "cta";
-                    btn.onclick = function () { location.href = href; };
-                } else {
-                    btn.disabled = true;
-                    btn.className = "cta is-disabled";
-                    btn.onclick = null;
-                }
-            }
+    var dev = $("dev"), btn = $("btn"), logo = $("logo");
+    logo.className = "logo";
 
-            function renderManual() {
-                var nav = $("routes");
-                var html = "";
-                for (var i = 0; i < MANUAL.length; i++) {
-                    var r = MANUAL[i];
-                    html += '<a class="route" href="' + r.href + '">' +
-                        '<span><span class="fw">' + r.label + '</span>' +
-                        '<span class="meta">' + r.meta + "</span></span>" +
-                        '<span class="go">ABRIR →</span></a>';
-                }
-                nav.innerHTML = html;
-                var first = nav.querySelector(".route");
-                if (first && !isPS4()) first.focus();
-            }
+    if (!isPS4()) {
+        set("dev", "não é uma PS4", "warn");
+        set("fw", "—");
+        set("compat", "abre este site na consola", "warn");
+        btn.textContent = "Abre na PS4";
+        showFallback();
+        return;
+    }
 
-            function run() {
-                renderManual();
-                var dev = $("dev");
-                var fwEl = $("fw");
-                var compat = $("compat");
-                var hint = $("hint");
+    set("dev", "PlayStation 4", "ok");
+    var fw = getFw();
+    if (!fw) {
+        set("fw", "desconhecido", "warn");
+        set("compat", "escolhe em baixo", "warn");
+        btn.textContent = "Firmware não detectado";
+        showFallback();
+        return;
+    }
+    set("fw", fw, "ok");
 
-                if (!isPS4()) {
-                    dev.textContent = "não é PS4";
-                    dev.className = "status-val warn";
-                    fwEl.textContent = "—";
-                    fwEl.className = "status-val";
-                    compat.textContent = "abre na consola";
-                    compat.className = "status-val warn";
-                    setCta(false, "Abre este link no browser da PS4");
-                    hint.textContent = "Neste PC/telemóvel podes escolher o firmware manualmente em baixo. Na PS4 a detecção é automática.";
-                    $("manual").open = true;
-                    return;
-                }
+    var r = route(fw);
+    if (!r) {
+        set("compat", "não", "bad");
+        btn.textContent = "FW " + fw + " não suportado";
+        return;
+    }
 
-                var fw = getFw();
-                dev.textContent = "PlayStation 4";
-                dev.className = "status-val ok";
-
-                if (!fw) {
-                    fwEl.textContent = "desconhecido";
-                    fwEl.className = "status-val warn";
-                    compat.textContent = "escolhe manualmente";
-                    compat.className = "status-val warn";
-                    setCta(false, "Firmware não detectado");
-                    $("manual").open = true;
-                    return;
-                }
-
-                fwEl.textContent = fw;
-                fwEl.className = "status-val ok";
-
-                var route = matchRoute(fw);
-                if (!route) {
-                    compat.textContent = "não";
-                    compat.className = "status-val bad";
-                    setCta(false, "Firmware " + fw + " não suportado neste host");
-                    hint.textContent = "Este FW não tem rota neste activate. Confirma a versão em Definições → Sistema.";
-                    $("manual").open = true;
-                    return;
-                }
-
-                compat.textContent = "sim";
-                compat.className = "status-val ok";
-                $("route-row").style.display = "flex";
-                $("route-name").textContent = route.label;
-                setCta(true, "Activar " + route.label, route.meta + " · toca para continuar", route.href);
-                hint.textContent = "Host preparado para FW " + fw + ". Se falhar, usa a lista manual.";
-
-                var cta = $("cta");
-                if (cta) cta.focus();
-            }
-
-            run();
-        })();
-    </script>
+    set("compat", "sim", "ok");
+    btn.disabled = false;
+    btn.textContent = "Jailbreak";
+    btn.onclick = function () { location.href = r.href; };
+    logo.onclick = btn.onclick;
+    btn.focus();
+})();
+</script>
 </body>
 </html>
