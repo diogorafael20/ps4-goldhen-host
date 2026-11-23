@@ -20,10 +20,10 @@ def generate(root: Path, output_name: str) -> list[str]:
         relative = path.relative_to(root).as_posix()
         entries.append(f"{relative} #{sha256(path)}")
     # Cache the shared icon; menu/selectors belong to navigation.manifest.
-    icon = root.parent.parent / "pspulse.png"
+    icon = root.parent.parent / "icon.png"
     if not icon.is_file():
         raise FileNotFoundError(f"shared icon does not exist: {icon}")
-    entries.append(f"../../pspulse.png #{sha256(icon)}")
+    entries.append(f"../../icon.png #{sha256(icon)}")
     return [
         "CACHE MANIFEST",
         "# generated; do not edit by hand",

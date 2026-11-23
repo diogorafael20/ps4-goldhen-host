@@ -55,14 +55,21 @@ account. If the legal position matters to you — and in some countries
 circumventing a technical protection measure is itself restricted — get advice
 from a lawyer in your jurisdiction rather than relying on this file.
 
-## Credits
+## Credits and licences
 
-| Piece | Author / source |
+The exploit chains, patches and payloads are not mine and are not relicensed
+here. Each file carries the copyright and licence notice it arrived with, and
+several are AGPL — those notices must stay intact on redistribution, both
+because the licence requires it and because removing them would misstate who
+wrote what.
+
+| Piece | Author, as stated in the source |
 |---|---|
-| Host assets, PSPulse packaging | `ghcr.io/chrisser73/ps4-host-offline-goldhen` |
-| afterglow (14.xx) | well0nez / m0zz |
-| Slopkit, Lapse, Poops (11.00 – 13.52) | PlayStation Pulse |
-| PSFree (7.00 – 9.60) | anonymous, psfree |
-| GoldHEN payload | GoldHEN project, as shipped in the source image |
+| afterglow (14.xx) | well0nez / m0zz — AGPL |
+| PSFree (7.00 – 9.60) | anonymous — AGPL |
+| Slopkit / Lapse / Poops (11.00 – 13.52) | as stated in each file |
+| GoldHEN payload | GoldHEN project |
 
-If a credit is missing or wrong, open an issue; it will be corrected.
+This repository's own work — firmware detection, the progress screen, the
+packaging and the validation in `tools/` — is what I maintain. If a credit is
+missing or wrong, open an issue and it will be corrected.

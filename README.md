@@ -80,9 +80,16 @@ bumping its manifest leaves consoles on the old copy — the manifest itself
 must change for the browser to refetch. `1400/make-manifest.sh` rebuilds its
 own from content hashes.
 
-## Where the pieces came from
+## Credits and licence
 
-Host assets from `ghcr.io/chrisser73/ps4-host-offline-goldhen` (PSPulse).
-Exploit chains, patches and payloads by their respective authors. This
-repository is not affiliated with Sony Interactive Entertainment, and
-"PlayStation" is used only to say what the thing runs on.
+The exploit chains, patches and payloads in the firmware folders are not mine
+and are not relicensed here; each file keeps the copyright and licence notice
+it arrived with, and several are AGPL. If you redistribute this repository, keep
+those notices intact — the licence requires it, and stripping them would be
+both a licence breach and a false claim of authorship.
+
+This repository's own work is the front door: the firmware detection, the
+percentage screen, the packaging and the validation in `tools/`.
+
+PlayStation, PS4 and PSN are trademarks of Sony Interactive Entertainment. This
+project is independent and not affiliated with or endorsed by Sony.
