@@ -49,36 +49,36 @@
         /* Order matters: "already loaded" and the failure lines must be read
          * before the generic success test, or both come out as success. */
         if (/already/i.test(t)) {
-            UI.done("Desbloqueio realizado", "j\u00e1 estava desbloqueada");
+            UI.done("Unlock complete", "it was already unlocked");
             return;
         }
         if (/Unsupported|not supported/i.test(t)) {
-            UI.fail("Firmware n\u00e3o suportado", "este desbloqueio n\u00e3o serve para esta consola");
+            UI.fail("Firmware not supported", "this unlock does not apply to this console");
             return;
         }
         if (/Failed to Load|Restart your Console|[Cc]ache failed|Load failed|Cannot [Ll]oad|error in loadPayload|network error/i.test(t)) {
-            UI.fail("Falhou", "reabre o browser e tenta outra vez");
+            UI.fail("Failed", "close and reopen the browser, then try again");
             return;
         }
         if (/Loading GoldHEN|Please Wait/i.test(t)) {
-            UI.set(88, "A carregar o GoldHEN\u2026");
+            UI.set(88, "Loading GoldHEN\u2026");
             return;
         }
         if (/Loaded|Success|succeeded/i.test(t)) {
-            UI.done("Desbloqueio realizado", "o GoldHEN est\u00e1 a correr");
+            UI.done("Unlock complete", "GoldHEN is running");
             return;
         }
         if (/Installing Offline Cache/i.test(t)) {
             var m = t.match(/(\d+)%/);
-            UI.set(4, "A guardar os ficheiros\u2026 " + (m ? m[1] + "%" : ""));
+            UI.set(4, "Saving the files\u2026 " + (m ? m[1] + "%" : ""));
             return;
         }
         if (/caching|Checking offline cache/i.test(t)) {
-            UI.set(3, "A verificar os ficheiros\u2026");
+            UI.set(3, "Checking the files\u2026");
             return;
         }
         if (/Jailbreak|Exploit|Starting/i.test(t)) {
-            UI.set(20, "A explorar a falha\u2026");
+            UI.set(20, "Exploiting the flaw\u2026");
         }
     }
 
@@ -86,12 +86,12 @@
      * only honest progress signal for the middle of the run. */
     function judgeStages(s) {
         if (!s || UI.isDone()) return;
-        if (/load GoldHen succeeded/i.test(s)) { UI.set(97, "A carregar o GoldHEN\u2026"); return; }
-        if (/STAGE: [Pp]atch kernel/i.test(s)) { UI.set(84, "A aplicar os patches\u2026"); return; }
-        if (/STAGE: Get arbitrary kernel read\/write|make_kernel_arw/i.test(s)) { UI.set(66, "A abrir caminho para o kernel\u2026"); return; }
-        if (/STAGE: Get string relative read|make_rdr/i.test(s)) { UI.set(48, "A ler a mem\u00f3ria do sistema\u2026"); return; }
-        if (/STAGE: UAF SSV|prepare_uaf/i.test(s)) { UI.set(30, "A explorar a falha\u2026"); return; }
-        if (/STAGE:|Exploiting/i.test(s)) { UI.set(16, "A preparar o exploit\u2026"); return; }
+        if (/load GoldHen succeeded/i.test(s)) { UI.set(97, "Loading GoldHEN\u2026"); return; }
+        if (/STAGE: [Pp]atch kernel/i.test(s)) { UI.set(84, "Applying the patches\u2026"); return; }
+        if (/STAGE: Get arbitrary kernel read\/write|make_kernel_arw/i.test(s)) { UI.set(66, "Opening a path into the kernel\u2026"); return; }
+        if (/STAGE: Get string relative read|make_rdr/i.test(s)) { UI.set(48, "Reading system memory\u2026"); return; }
+        if (/STAGE: UAF SSV|prepare_uaf/i.test(s)) { UI.set(30, "Exploiting the flaw\u2026"); return; }
+        if (/STAGE:|Exploiting/i.test(s)) { UI.set(16, "Preparing the exploit\u2026"); return; }
     }
 
     function watch(el, fn) {
@@ -114,7 +114,7 @@
         var sup = document.querySelector(".pspulse-support");
         if (sup) sup.style.display = "none";
 
-        UI.mount({ fw: fwFromUa(), msg: "A preparar\u2026", logEl: $("console") || $("log") });
+        UI.mount({ fw: fwFromUa(), msg: "Preparing\u2026", logEl: $("console") || $("log") });
 
         var statusFn = function () { judge(readStatus()); };
         var stageFn = function () { judgeStages(readStages()); };

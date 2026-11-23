@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt" manifest="cache.manifest">
+<html lang="en" manifest="cache.manifest">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Desbloqueio</title>
+<title>Unlock</title>
 <link rel="icon" type="image/png" href="../pspulse.png">
 </head>
 <body>
@@ -28,35 +28,35 @@
     function judge(t) {
         if (!t || UI.isDone()) return;
         if (/PROOF-OK\s+PAYLOAD-RUNNING|payload_running=1/.test(t)) {
-            UI.done("Desbloqueio realizado", "o GoldHEN est\u00e1 a correr");
+            UI.done("Unlock complete", "GoldHEN is running");
             return;
         }
         if (/FW-UNSUPPORTED|no offsets for this firmware/.test(t)) {
-            UI.fail("Firmware n\u00e3o suportado", "este desbloqueio n\u00e3o serve para esta consola");
+            UI.fail("Firmware not supported", "this unlock does not apply to this console");
             return;
         }
         if (/REBOOT-REQUIRED|REBOOT FIRST|is still poisoned/.test(t)) {
-            UI.fail("Falhou", "desliga a PS4 e volta a ligar antes de repetir");
+            UI.fail("Failed", "power the console off and on before trying again");
             return;
         }
         if (/PROOF-FAIL\s+PAYLOAD-RUNNING|payload_running=0/.test(t)) {
-            UI.fail("Falhou", "a consola ficou desbloqueada mas o GoldHEN n\u00e3o arrancou; reinicia e tenta outra vez");
+            UI.fail("Failed", "the console is unlocked but GoldHEN did not start; reboot and try again");
             return;
         }
         if (/THREW|GIVEUP|attempt-ceiling/.test(t)) {
-            UI.fail("Falhou", "reabre o browser e tenta outra vez");
+            UI.fail("Failed", "close and reopen the browser, then try again");
             return;
         }
 
         var pct = 0, msg = "";
-        if (/PAYLOAD-RUN|PAYLOAD-COPY/.test(t)) { pct = 96; msg = "A carregar o GoldHEN\u2026"; }
-        else if (/KPATCH/.test(t)) { pct = 86; msg = "A aplicar os patches\u2026"; }
-        else if (/JB-ROOT|uid 0/.test(t)) { pct = 74; msg = "A obter acesso root\u2026"; }
-        else if (/JB-ALREADY|EG-VERDICT/.test(t)) { pct = 70; msg = "A verificar\u2026"; }
-        else if (/PR-GATE|PR-DRAIN/.test(t)) { pct = 62; msg = "A fechar a corrida\u2026"; }
-        else if (/aio_multi|make_karw|leak/.test(t)) { pct = 48; msg = "A abrir caminho para o kernel\u2026"; }
-        else if (/attempt \d+|primitive|workers/.test(t)) { pct = 26; msg = "A explorar a falha\u2026"; }
-        else { pct = 12; msg = "A preparar o exploit\u2026"; }
+        if (/PAYLOAD-RUN|PAYLOAD-COPY/.test(t)) { pct = 96; msg = "Loading GoldHEN\u2026"; }
+        else if (/KPATCH/.test(t)) { pct = 86; msg = "Applying the patches\u2026"; }
+        else if (/JB-ROOT|uid 0/.test(t)) { pct = 74; msg = "Getting root access\u2026"; }
+        else if (/JB-ALREADY|EG-VERDICT/.test(t)) { pct = 70; msg = "Checking\u2026"; }
+        else if (/PR-GATE|PR-DRAIN/.test(t)) { pct = 62; msg = "Closing the race\u2026"; }
+        else if (/aio_multi|make_karw|leak/.test(t)) { pct = 48; msg = "Opening a path into the kernel\u2026"; }
+        else if (/attempt \d+|primitive|workers/.test(t)) { pct = 26; msg = "Exploiting the flaw\u2026"; }
+        else { pct = 12; msg = "Preparing the exploit\u2026"; }
         if (pct) UI.set(pct, msg);
     }
 
@@ -79,7 +79,7 @@
         if (n >= 2) return;
         try { sessionStorage.setItem(RELOAD_KEY, String(n + 1)); } catch (e) { return; }
         var m = document.getElementById("huMsg");
-        if (m) m.textContent = "A mem\u00f3ria n\u00e3o caiu no s\u00edtio certo. A tentar outra vez\u2026";
+        if (m) m.textContent = "The memory did not land in the right place. Trying again\u2026";
         setTimeout(function () { location.reload(); }, 2500);
     }
 

@@ -23,7 +23,9 @@
         '.hu *{box-sizing:border-box}',
         '.hu .box{width:100%;max-width:400px;padding:32px 24px;text-align:center}',
         '.hu .fw{color:#5f6b7a;font-size:12px;letter-spacing:.16em;text-transform:uppercase;',
-        'margin:0 0 22px}',
+        'margin:0 0 22px;display:-webkit-box;display:flex;-webkit-box-align:center;',
+        'align-items:center;-webkit-box-pack:center;justify-content:center}',
+        '.hu .fw svg{width:15px;height:15px;margin-right:8px;display:block;opacity:.85}',
         '.hu .pct{font-size:64px;font-weight:bold;line-height:1;letter-spacing:-.03em;',
         'color:#e8edf3;margin:0 0 20px}',
         '.hu .pct i{font-style:normal;font-size:26px;font-weight:normal;color:#5f6b7a;',
@@ -78,6 +80,18 @@
         if (fill) fill.style.width = pct + "%";
     }
 
+    /* The four face buttons, drawn rather than fetched: the console's browser
+       caches images aggressively and an inline SVG is one less file that can
+       go missing from the app cache. */
+    var GLYPH = '<svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">' +
+        '<polygon points="16,2.8 20.4,10.4 11.6,10.4" fill="none" stroke="#5fd6c8" ' +
+        'stroke-width="2" stroke-linejoin="round"/>' +
+        '<circle cx="25.2" cy="16" r="4.2" fill="none" stroke="#ff8080" stroke-width="2"/>' +
+        '<path d="M3.9 12.4 L10.9 19.6 M10.9 12.4 L3.9 19.6" fill="none" stroke="#8fb6f0" ' +
+        'stroke-width="2" stroke-linecap="round"/>' +
+        '<rect x="12.3" y="21.6" width="7.4" height="7.4" fill="none" stroke="#f0a3d0" ' +
+        'stroke-width="2" stroke-linejoin="round"/></svg>';
+
     function say(text) {
         var m = document.getElementById("huMsg");
         if (m && text) m.textContent = text;
@@ -99,7 +113,13 @@
             var box = node("div", "hu");
             box.id = "hostui";
             var inner = node("div", "box");
-            inner.appendChild(node("div", "fw", opts.fw ? "PS4 \u00b7 " + opts.fw : "PS4"));
+
+            /* The label is set through innerHTML because it carries the glyph;
+               nothing in it ever comes from the page or the chain. */
+            var fwLabel = node("div", "fw");
+            fwLabel.innerHTML = GLYPH + "<span>" +
+                (opts.fw ? "PS4 \u00b7 " + opts.fw : "PS4") + "</span>";
+            inner.appendChild(fwLabel);
 
             var pct = node("div", "pct");
             pct.id = "huPct";
@@ -113,18 +133,18 @@
             bar.appendChild(fill);
             inner.appendChild(bar);
 
-            var msg = node("div", "msg", opts.msg || "A preparar\u2026");
+            var msg = node("div", "msg", opts.msg || "Preparing\u2026");
             msg.id = "huMsg";
             inner.appendChild(msg);
 
-            var again = node("button", "", "Tentar outra vez");
+            var again = node("button", "", "Try again");
             again.id = "huAgain";
             again.type = "button";
             again.onclick = function () { location.href = api.home || "../index.html"; };
             inner.appendChild(again);
 
             var det = node("div", "det");
-            var link = node("a", "", "detalhes");
+            var link = node("a", "", "details");
             link.href = "#";
             det.appendChild(link);
             inner.appendChild(det);
@@ -145,7 +165,7 @@
                     log.textContent = txt.length > 6000 ? txt.slice(-6000) : txt;
                 }
                 log.className = open ? "log" : "log show";
-                link.textContent = open ? "detalhes" : "esconder";
+                link.textContent = open ? "details" : "hide";
             };
 
             box.appendChild(inner);
@@ -180,10 +200,10 @@
             paint();
             var box = document.getElementById("hostui");
             if (box) box.className = "hu ok";
-            say(text || "Desbloqueio realizado");
+            say(text || "Unlock complete");
             if (advice) {
                 var m = document.getElementById("huMsg");
-                if (m) m.textContent = (text || "Desbloqueio realizado") + " \u2014 " + advice;
+                if (m) m.textContent = (text || "Unlock complete") + " \u2014 " + advice;
             }
             var again = document.getElementById("huAgain");
             if (again) again.className = "show";
