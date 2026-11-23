@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PS4 Unlock</title>
+<title>PS4 Jailbreak</title>
 <link rel="icon" type="image/png" href="icon.png">
 <style>
 * { box-sizing: border-box; }
@@ -43,12 +43,6 @@ body {
 .opts { margin: 22px 0 0; font-size: 12px; }
 .opts a { color: #4d5867; text-decoration: none; }
 
-.legal {
-    margin: 30px 0 0; color: #39424f; font-size: 11px; line-height: 1.5;
-    text-align: center; padding: 0 4px;
-}
-.legal a { color: #4d5867; text-decoration: underline; }
-
 .panel { display: none; margin: 20px 0 0; text-align: left; }
 .panel.open { display: block; }
 .panel .lab {
@@ -81,7 +75,7 @@ body {
                   stroke-linejoin="round"/>
         </svg>
     </div>
-    <div class="title" id="title">Unlock</div>
+    <div class="title" id="title">PS4 Jailbreak</div>
     <div class="sub" id="sub">Checking the console&hellip;</div>
     <div class="fw" id="fwtxt">&nbsp;</div>
 
@@ -97,12 +91,6 @@ body {
         </div>
         <div class="lab">Firmware</div>
         <div id="flist"></div>
-    </div>
-
-    <div class="legal">
-        For study and testing on your own console. You use it at your own risk:
-        it can brick the console or get a PSN account banned. Not affiliated with Sony.
-        <a href="notice.html">Full notice</a>
     </div>
 </div>
 
@@ -217,18 +205,16 @@ body {
 
         picked = target(r, p);
         $("fwtxt").textContent = "PS4 \u00b7 " + r.label;
-        show("Unlock",
-            (p === "ps4hen" ? "PS4HEN" : "GoldHEN") + " \u00b7 firmware " + r.label,
-            "");
+        show("PS4 Jailbreak", "PS4Unlocker", "");
         btn.disabled = false;
-        btn.textContent = "Unlock";
+        btn.textContent = "START";
     }
 
     btn.onclick = function () {
         if (!picked) return;
         btn.disabled = true;
         btn.className = "btn go";
-        btn.textContent = "Unlocking\u2026";
+        btn.textContent = "Starting\u2026";
         $("sub").textContent = "Don't close the browser.";
         setTimeout(function () { location.href = picked; }, 200);
     };
