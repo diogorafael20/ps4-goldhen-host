@@ -2,8 +2,10 @@ CACHE MANIFEST
 # resource-path-fix-20261021-main-v2
 # v15 - poops: no auto-reload, cache-only (no online fallback) 20261010
 # v16 - add 11.52 lapse routing 20261022
+# v17 - one-screen UI: plain result, no step log 20261123
 
 CACHE:
+../ui.js
 index.html
 run_lapse.html
 run_poops.html
