@@ -261,7 +261,26 @@ def check_reports():
                 fail("%s/%s is empty" % (folder, f))
 
 
+def check_permissions():
+    """Every published file must be readable by the server's user.
+
+    The commit mode is what a clone gets, and a file committed as 600 is
+    unreadable to nginx (a different user) -- it answers 403, so a page that
+    exists looks missing. This has happened, which is why it is checked.
+    """
+    for base, dirs, files in os.walk(ROOT):
+        dirs[:] = [d for d in dirs if d not in (".git", ".github")]
+        for f in files:
+            path = os.path.join(base, f)
+            mode = os.stat(path).st_mode
+            if not (mode & 0o004):
+                fail("%s is not readable by other users (mode %o), so a server "
+                     "running as a different user returns 403"
+                     % (rel(path), mode & 0o777))
+
+
 def main():
+    check_permissions()
     check_manifests()
     check_links()
     check_contract()

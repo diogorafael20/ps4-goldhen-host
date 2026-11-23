@@ -1,0 +1,17 @@
+# docker compose up -d      -> http://<this-machine>:8080/
+#
+# Host networking on Linux means the console reaches this machine's own
+# address, with no port mapping and no separate container IP: the console's
+# browser has no business learning about a container network.
+#
+# On Docker Desktop (macOS/Windows) host networking is not the same thing --
+# use the ports mapping below instead and delete `network_mode`.
+
+services:
+  unlock-host:
+    build: .
+    container_name: ps4-unlock-host
+    restart: unless-stopped
+    network_mode: host
+    # ports:
+    #   - "8080:80"
