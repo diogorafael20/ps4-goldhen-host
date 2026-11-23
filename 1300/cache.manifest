@@ -9,7 +9,7 @@ CACHE:
 index.html
 run_lapse.html
 run_poops.html
-../pspulse.png
+../icon.png
 chain_lapse.js
 chain_poops.js
 core.js

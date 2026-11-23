@@ -18,6 +18,19 @@ Point `activate.doesitworknow.me` to GitHub Pages:
 
 For apex `doesitworknow.me` (optional later): A records to GitHub Pages IPs.
 
-## Source
+## Structure
 
-Files from the local Docker image `ghcr.io/chrisser73/ps4-host-offline-goldhen` (PSPulse / GoldHEN host assets).
+`index.html` decides which folder serves a firmware, so a new chain is added by
+dropping its files in a folder and adding one route. Each folder's
+`cache.manifest` must list every file that folder needs, because the console
+serves the offline copy once it has one.
+
+## Before publishing
+
+```bash
+python3 tools/check.py
+python3 tools/selftest.py
+```
+
+Both must pass. The first catches a broken host; the second proves the first
+still notices when something breaks.
