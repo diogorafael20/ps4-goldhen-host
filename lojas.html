@@ -7,92 +7,96 @@
     <link rel="icon" type="image/png" href="pspulse.png">
     <style>
         body {
-            background: #111827;
+            background: #0b1220;
             color: #ffffff;
             font-family: Arial, Helvetica, sans-serif;
             padding: 24px 18px 40px;
             margin: 0;
         }
-        a { color: #93c5fd; }
-        h1 { font-size: 28px; color: #ffffff; margin: 0 0 8px 0; }
-        h1 span { color: #3b82f6; }
-        h2 { font-size: 20px; color: #ffffff; margin: 0 0 8px 0; }
-        .lead { color: #cccccc; font-size: 16px; margin: 0 0 16px 0; line-height: 1.4; }
+        a { color: #7dd3fc; }
+        h1 { font-size: 30px; color: #ffffff; margin: 0 0 10px 0; }
+        h1 span { color: #60a5fa; }
+        h2 { font-size: 22px; color: #ffffff; margin: 0 0 10px 0; }
+        .lead { color: #ffffff; font-size: 17px; margin: 0 0 16px 0; line-height: 1.45; }
         .note {
-            background: #1f2937;
-            padding: 12px;
-            margin: 0 0 16px 0;
-            color: #dddddd;
-            font-size: 15px;
-            line-height: 1.45;
+            background: #1e3a5f;
+            padding: 14px;
+            margin: 0 0 18px 0;
+            color: #ffffff;
+            font-size: 16px;
+            line-height: 1.5;
         }
         .card {
-            background: #1f2937;
-            padding: 14px;
-            margin: 0 0 12px 0;
+            background: #162033;
+            border: 2px solid #3b82f6;
+            padding: 16px;
+            margin: 0 0 14px 0;
             color: #ffffff;
         }
-        .card .title { font-size: 20px; font-weight: bold; color: #ffffff; margin: 0 0 6px 0; }
-        .card .desc { font-size: 15px; color: #cccccc; margin: 0 0 10px 0; line-height: 1.4; }
-        .card .tag { font-size: 13px; color: #4ade80; margin: 0 0 8px 0; }
-        .card .tag.warn { color: #fbbf24; }
-        .card .go { font-size: 17px; color: #93c5fd; }
-        .steps { margin-top: 22px; color: #dddddd; font-size: 15px; line-height: 1.55; }
-        .steps h2 { margin-bottom: 8px; }
-        .back { margin-bottom: 18px; font-size: 16px; }
-        .ver { margin-top: 24px; font-size: 12px; color: #888888; }
+        .card .title { font-size: 22px; font-weight: bold; color: #ffffff; margin: 0 0 8px 0; }
+        .card .desc { font-size: 16px; color: #ffffff; margin: 0 0 10px 0; line-height: 1.45; }
+        .card .tag { font-size: 14px; color: #86efac; margin: 0 0 10px 0; }
+        .card .tag.warn { color: #fde047; }
+        .card .go { font-size: 18px; color: #7dd3fc; display: block; margin: 0 0 6px 0; }
+        .steps { margin-top: 24px; color: #ffffff; font-size: 16px; line-height: 1.6; }
+        .steps h2 { margin-bottom: 10px; }
+        .steps li { margin-bottom: 6px; }
+        .back { margin-bottom: 18px; font-size: 17px; }
+        .ver { margin-top: 24px; font-size: 13px; color: #94a3b8; }
     </style>
 </head>
 <body>
     <div class="back"><a href="./">Voltar ao activate</a></div>
 
     <h1>lojas<span>.</span></h1>
-    <p class="lead">Depois do jailbreak + GoldHEN. Homebrew free. Instala com Package Installer (Debug Settings).</p>
+    <p class="lead">Depois do jailbreak + GoldHEN. Caminho mais facil: HB-Store primeiro.</p>
 
     <div class="note">
-        Ordem: 1) Homebrew Store &nbsp; 2) Itemzflow &nbsp; 3) FPKGi.<br>
-        DPLAY / Infinity: sem fonte oficial aqui — no FPKGi podes meter as tuas listas JSON.
+        COMO INSTALAR (resumo):<br>
+        1) GoldHEN ja carregado.<br>
+        2) Abre o link &quot;Instalar HB-Store&quot; abaixo (fica na PS4).<br>
+        3) Ou: mete o .pkg no USB → Definicoes → Debug Settings → Package Installer → usb:/
     </div>
 
     <div class="card">
         <div class="title">1. Homebrew Store (PKG-Zone)</div>
-        <div class="desc">Loja free (LightningMods). Instala apps homebrew e actualiza-se. Melhor ponto de partida.</div>
+        <div class="desc">Loja free (LightningMods). Melhor ponto de partida. Daqui instalas o resto.</div>
         <div class="tag">recomendado · free</div>
-        <a class="go" href="https://pkg-zone.com/page/install-hb-store">Abrir pagina da HB-Store</a><br>
         <a class="go" href="http://pkg-zone.com/install">Instalar HB-Store na PS4 (com GoldHEN)</a>
+        <a class="go" href="https://pkg-zone.com/page/install-hb-store">Pagina explicativa HB-Store</a>
     </div>
 
     <div class="card">
         <div class="title">2. Itemzflow</div>
-        <div class="desc">Gestor de jogos / menu alternativo (open source). Dumps, patches, PKGs. Tambem via Homebrew Store.</div>
+        <div class="desc">Gestor de jogos / menu. Depois da HB-Store, procura Itemzflow la dentro e instala.</div>
         <div class="tag">free · open source</div>
         <a class="go" href="https://pkg-zone.com/details/ITEM00001">Abrir Itemzflow no PKG-Zone</a>
     </div>
 
     <div class="card">
         <div class="title">3. FPKGi</div>
-        <div class="desc">Browser/instalador de PKGs via listas JSON (GitHub / NAS / web). PKG: FPKGi_v1.10.0-release.pkg</div>
+        <div class="desc">Instalador de PKGs com listas JSON. Baixa o .pkg no telemovel/PC, mete no USB, instala com Package Installer. (GitHub no browser da PS4 costuma falhar.)</div>
         <div class="tag">free · open source</div>
-        <a class="go" href="https://github.com/ItsJokerZz/FPKGi/releases/latest">Download FPKGi (GitHub)</a>
+        <a class="go" href="https://github.com/ItsJokerZz/FPKGi/releases/latest">Download FPKGi (PC / telemovel)</a>
     </div>
 
     <div class="card">
         <div class="title">4. FPKGi+</div>
-        <div class="desc">Lista curada de homebrew open source (emuladores, Apollo, etc.). Sem jogos incluidos.</div>
+        <div class="desc">Lista curada de homebrew (emuladores, Apollo, etc.). Sem jogos. Usa depois de teres FPKGi.</div>
         <div class="tag">free · brewology</div>
         <a class="go" href="https://store.brewology.com/ps4/fpkgi/">Abrir FPKGi+ no Brewology</a>
     </div>
 
     <div class="steps">
-        <h2>Como instalar um PKG</h2>
+        <h2>Package Installer (USB)</h2>
         <ol>
-            <li>GoldHEN carregado (FW Update Block ligado).</li>
-            <li>USB exFAT/FAT32 com o .pkg na raiz, ou Remote Package Install.</li>
-            <li>Definicoes → GoldHEN / Debug Settings → Game → Package Installer.</li>
-            <li>Fonte: USB usb:/ (ou HDD /data/pkg).</li>
+            <li>GoldHEN carregado + FW Update Block ligado.</li>
+            <li>USB exFAT ou FAT32 com o ficheiro .pkg na raiz.</li>
+            <li>Definicoes → (GoldHEN) Debug Settings → Game → Package Installer.</li>
+            <li>Escolhe usb:/ e o .pkg.</li>
         </ol>
     </div>
 
-    <div class="ver">doesitworknow · lojas v2 (PS4 browser)</div>
+    <div class="ver">doesitworknow · lojas v3 (contraste PS4)</div>
 </body>
 </html>
