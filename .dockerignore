@@ -1,0 +1,8 @@
+# Never build the repository's own machinery into the image.
+.git
+.github
+tools
+Dockerfile
+docker-compose.yml
+.dockerignore
+*.md
