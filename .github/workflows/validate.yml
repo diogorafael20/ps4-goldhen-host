@@ -1,0 +1,37 @@
+name: validate host
+
+# Runs on every push and pull request. The point is not to test the exploit --
+# no runner can do that -- but to catch the failures a console reports as a
+# blank screen: a manifest that lists a file that is gone, a link to a renamed
+# page, a chain whose DOM contract no page honours any more, a folder that
+# claims a firmware its offset table does not have, a payload blob lost in a
+# merge, or a syntax error in an inline script.
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Check structure, links, manifests and syntax
+        run: python3 tools/check.py
+
+      - name: Check the checker still catches a broken page
+        run: python3 tools/selftest.py

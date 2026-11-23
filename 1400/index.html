@@ -1,15 +1,20 @@
 <!doctype html>
-<html lang="en" manifest="cache.appcache">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>GoldHEN</title>
-  </head>
-  <body>
-    <script>
-      (function () {
-        location.replace("jb.html?log=1&afterglow=run&mode=goldhen");
-      })();
-    </script>
-  </body>
+<html lang="pt" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Desbloqueio</title>
+</head>
+<body>
+<script>
+    (function () {
+        /* The run page only arms when it was reached from here, so this hop
+           has to happen rather than a direct link. Keep the payload choice. */
+        var p = /[?&]payload=([^&]*)/.exec(location.search);
+        var t = "jb.html?log=1&afterglow=run&mode=goldhen";
+        if (p && decodeURIComponent(p[1]) === "hen.bin") t = "jb.html?log=1&afterglow=run&payload=hen.bin";
+        location.replace(t);
+    }());
+</script>
+</body>
 </html>

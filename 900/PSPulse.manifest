@@ -1,9 +1,11 @@
 CACHE MANIFEST
 # resource-path-fix-20261021-main-v2
-# offline-manifests-v1-20261021
+# offline-manifests-v1-20261123
 #VERSION 3.0 - goldhen b18.12 reliability-final support-link-20261003
 
 CACHE:
+../ui.js
+../simple.js
 alert.js
 cache.html
 config.js

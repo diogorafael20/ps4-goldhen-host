@@ -2,8 +2,10 @@ CACHE MANIFEST
 # resource-path-fix-20261021-main-v2
 # offline-manifests-v1-20261021
 # v4 - startup, AppCache and telemetry reliability 20261003
+# v5 - one-screen UI: plain result, no step log 20261123
 
 CACHE:
+../ui.js
 index.html
 jb.html
 cache.html

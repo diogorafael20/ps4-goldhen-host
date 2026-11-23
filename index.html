@@ -1,252 +1,240 @@
 <!DOCTYPE html>
 <html lang="pt" manifest="navigation.manifest">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <title>doesitworknow</title>
-    <link rel="icon" type="image/png" href="pspulse.png">
-    <style>
-        body {
-            margin: 0;
-            padding: 28px 18px 36px;
-            background: #1a1510;
-            color: #fff8e7;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        a { color: #ffd36a; text-decoration: underline; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Desbloqueio PS4</title>
+<link rel="icon" type="image/png" href="pspulse.png">
+<style>
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+    background: #0b0e12;
+    color: #e8edf3;
+    font: 16px/1.5 Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: -webkit-box; display: -webkit-flex; display: flex;
+    -webkit-box-align: center; -webkit-align-items: center; align-items: center;
+    -webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
+    overflow: auto;
+}
+.wrap { width: 100%; max-width: 400px; padding: 32px 24px; text-align: center; }
+.mark {
+    width: 58px; height: 58px; margin: 0 auto 26px; border-radius: 14px;
+    background: #141b24; border: 1px solid #1f2933;
+    display: -webkit-box; display: flex; -webkit-box-align: center; align-items: center;
+    -webkit-box-pack: center; justify-content: center;
+}
+.mark span { color: #7cc4ff; font-size: 24px; font-weight: bold; letter-spacing: -.02em; }
+.title { font-size: 30px; font-weight: bold; letter-spacing: -.02em; margin: 0 0 8px; }
+.sub { color: #93a1b1; font-size: 15px; margin: 0 0 6px; min-height: 22px; }
+.fw { color: #4d5867; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 30px; }
 
-        .wrap {
-            max-width: 520px;
-            margin: 0 auto;
-            border: 3px solid #ffd36a;
-            background: #241c14;
-            padding: 22px 18px 26px;
-        }
+.btn {
+    display: block; width: 100%; padding: 19px 16px; border: 0; border-radius: 8px;
+    background: #7cc4ff; color: #0b0e12;
+    font: bold 19px/1.2 Arial, Helvetica, sans-serif; cursor: pointer;
+    -webkit-appearance: none;
+}
+.btn[disabled] { background: #1b222c; color: #5f6b7a; cursor: default; }
+.btn.go { background: #7fe0a6; }
 
-        .stamp {
-            display: inline-block;
-            border: 3px solid #5eead4;
-            color: #5eead4;
-            font-size: 13px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            padding: 6px 10px;
-            margin-bottom: 14px;
-            -webkit-transform: rotate(-6deg);
-            transform: rotate(-6deg);
-        }
+.opts { margin: 22px 0 0; font-size: 12px; }
+.opts a { color: #4d5867; text-decoration: none; }
 
-        .brand {
-            font-size: 28px;
-            font-weight: bold;
-            color: #fff8e7;
-            margin: 8px 0 4px 0;
-            line-height: 1.15;
-        }
-        .brand em {
-            font-style: normal;
-            color: #ffd36a;
-        }
-
-        .joke {
-            font-size: 15px;
-            color: #e7d7b8;
-            margin: 0 0 18px 0;
-            line-height: 1.4;
-        }
-
-        .row {
-            background: #31251a;
-            border-left: 6px solid #ffd36a;
-            padding: 10px 12px;
-            margin: 0 0 8px 0;
-            font-size: 16px;
-            line-height: 1.35;
-        }
-        .row b { color: #ffffff; }
-        .ok { color: #86efac; }
-        .warn { color: #fde047; }
-        .bad { color: #fb7185; }
-
-        .btn {
-            display: block;
-            width: 100%;
-            margin-top: 18px;
-            padding: 16px 12px;
-            border: 0;
-            background: #ffd36a;
-            color: #1a1510;
-            font: bold 20px/1.2 Arial, Helvetica, sans-serif;
-            cursor: pointer;
-            text-align: center;
-        }
-        .btn[disabled] {
-            background: #5a4a38;
-            color: #b8a88f;
-            cursor: default;
-        }
-
-        .fallback {
-            display: none;
-            margin-top: 18px;
-        }
-        .fallback.show { display: block; }
-        .fallback p {
-            color: #e7d7b8;
-            font-size: 14px;
-            margin: 0 0 8px 0;
-        }
-        .fallback a {
-            display: block;
-            background: #31251a;
-            color: #ffd36a;
-            padding: 12px;
-            margin: 0 0 6px 0;
-            text-decoration: none;
-            font-size: 16px;
-            border: 1px solid #5a4a38;
-        }
-
-        .foot {
-            margin-top: 20px;
-            font-size: 12px;
-            color: #a89070;
-            text-align: center;
-        }
-    </style>
+.panel { display: none; margin: 20px 0 0; text-align: left; }
+.panel.open { display: block; }
+.panel .lab {
+    color: #4d5867; font-size: 11px; letter-spacing: .14em;
+    text-transform: uppercase; margin: 16px 0 8px;
+}
+.panel a.row {
+    display: block; padding: 12px 14px; margin: 0 0 6px; border-radius: 6px;
+    background: #11161d; border: 1px solid #161d26;
+    color: #93a1b1; text-decoration: none; font-size: 14px;
+}
+.panel a.row.on { background: #16222f; border-color: #24405c; color: #7cc4ff; }
+</style>
 </head>
 <body>
 <div class="wrap">
-    <div class="stamp" id="stamp">EM ANALISE</div>
-    <div class="brand">does it<br>work <em>now</em>?</div>
-    <p class="joke" id="joke">A abrir o dossier da consola… se passar, ha desbloqueio. Se nao passar, ha desculpas.</p>
+    <div class="mark"><span>PS</span></div>
+    <div class="title" id="title">Desbloqueio</div>
+    <div class="sub" id="sub">A verificar a consola&hellip;</div>
+    <div class="fw" id="fwtxt">&nbsp;</div>
 
-    <div class="row">Consola: <b id="dev">…</b></div>
-    <div class="row">Firmware: <b id="fw">…</b></div>
-    <div class="row">Veredicto: <b id="compat">…</b></div>
+    <button type="button" class="btn" id="go" disabled>Aguarda&hellip;</button>
 
-    <button type="button" class="btn" id="btn" disabled>A analisar…</button>
+    <div class="opts"><a href="#" id="optlink">op&ccedil;&otilde;es</a></div>
 
-    <div class="fallback" id="fallback">
-        <p>Escolhe o firmware a mao (como no exame oral):</p>
-        <div id="routes"></div>
+    <div class="panel" id="panel">
+        <div class="lab">Desbloqueio</div>
+        <div id="plist">
+            <a href="#" class="row on" data-p="goldhen">GoldHEN (recomendado)</a>
+            <a href="#" class="row" data-p="ps4hen">PS4HEN &mdash; s&oacute; 14.xx</a>
+        </div>
+        <div class="lab">Firmware</div>
+        <div id="flist"></div>
     </div>
-
-    <div class="foot">doesitworknow · so desbloqueio · v4</div>
 </div>
 
 <script>
 (function () {
-    try {
-        var ua0 = navigator.userAgent || "";
-        var isLan = /^(127\.|192\.168\.|10\.|172\.(1[6-9]|2\d|3[01])\.)/.test(location.hostname || "");
-        if (ua0.indexOf("PlayStation 4") !== -1 && location.protocol === "https:" && !isLan &&
-            location.hostname.indexOf("github.io") === -1) {
-            location.replace("http://" + location.host + location.pathname + location.search);
-            return;
-        }
-    } catch (e) {}
-
+    /* Ranges, not a table of exact versions: a console that reports 13.04 or
+       12.52 has to land on the same host as 13.02 or 12.50. */
     var ROUTES = [
-        { min: 14.00, max: 14.02, href: "1400/goldhen.html",          label: "14.00 – 14.02" },
-        { min: 13.02, max: 13.52, href: "1352/index.html",            label: "13.02 – 13.52" },
-        { min: 12.50, max: 13.00, href: "1300/index.html",            label: "12.50 – 13.00" },
-        { min: 11.00, max: 12.02, href: "1300/index.html",            label: "11.00 – 12.02" },
-        { min: 9.00,  max: 9.60,  href: "900/version-selector.html",  label: "9.00 – 9.60" },
-        { min: 7.00,  max: 8.52,  href: "700/version-selector.html",  label: "7.00 – 8.52" },
-        { min: 6.72,  max: 6.72,  href: "672/index.html",             label: "6.72" },
-        { min: 6.00,  max: 11.02, href: "css/version-selector.html",  label: "6.00 – 11.02 (CSS)" },
-        { min: 5.05,  max: 5.05,  href: "505/index.html",             label: "5.05" }
-    ];
-
-    var JOKES_OK = [
-        "Aprovado com distinção. A Sony nao precisa de saber.",
-        "Passou no teste. O botao amarelo e a tua responsabilidade agora.",
-        "Consola idonea. Exploit a aquecer os motores."
-    ];
-    var JOKES_BAD = [
-        "Reprovado. Este firmware ainda nao tem o nosso carimbo.",
-        "O dossier ficou a meio. Firmware fora da lista."
+        { min: 14.00, max: 14.02, label: "14.00 \u2013 14.02", dir: "1400" },
+        { min: 13.02, max: 13.52, label: "13.02 \u2013 13.52", dir: "1352" },
+        { min: 12.50, max: 13.00, label: "12.50 \u2013 13.00", dir: "1300" },
+        { min: 11.00, max: 12.02, label: "11.00 \u2013 12.02", dir: "1300" },
+        { min: 9.00,  max: 9.60,  label: "9.00 \u2013 9.60",     dir: "900" },
+        { min: 7.00,  max: 8.52,  label: "7.00 \u2013 8.52",     dir: "700" },
+        { min: 6.72,  max: 6.72,  label: "6.72",                dir: "672" },
+        { min: 5.05,  max: 5.05,  label: "5.05",                dir: "505" },
+        { min: 6.00,  max: 11.02, label: "6.00 \u2013 11.02",     dir: "css/version-selector.html" }
     ];
 
     function $(id) { return document.getElementById(id); }
-    function pick(arr) { return arr[Math.floor(Math.random() * arr.length)] || arr[0]; }
-    function isPS4() { return (navigator.userAgent || "").indexOf("PlayStation 4") !== -1; }
-    function getFw() {
-        var ua = navigator.userAgent || "";
-        var m = ua.match(/PlayStation 4\/([0-9.]+)/);
-        if (m) return m[1];
-        var s = ua.indexOf("5.0 (") + 19, e = ua.indexOf(") Apple");
-        if (s > 18 && e > s) return ua.substring(s, e).replace("layStation 4/", "").trim();
-        return null;
+
+    function isPS4() {
+        return (navigator.userAgent || "").indexOf("PlayStation 4") !== -1;
     }
+
+    /* The exploit tables decode the UA minor as hex, so do it the same way
+       here or the two disagree on 12.5x and 13.5x. */
+    function getFw() {
+        var m = (navigator.userAgent || "").match(/PlayStation\s+4[\/ ](\d+)\.(\d+)/);
+        if (!m) return null;
+        var minor = parseInt(m[2], 16);
+        var hex = minor.toString(16);
+        if (hex.length < 2) hex = "0" + hex;
+        return m[1] + "." + hex;
+    }
+
     function route(fw) {
         var n = parseFloat(fw);
         if (isNaN(n)) return null;
-        for (var i = 0; i < ROUTES.length; i++) if (n >= ROUTES[i].min && n <= ROUTES[i].max) return ROUTES[i];
+        for (var i = 0; i < ROUTES.length; i++) {
+            if (n >= ROUTES[i].min && n <= ROUTES[i].max) return ROUTES[i];
+        }
         return null;
     }
-    function showFallback() {
-        var h = "";
-        for (var i = 0; i < ROUTES.length; i++)
-            h += '<a href="' + ROUTES[i].href + '">FW ' + ROUTES[i].label + '</a>';
-        $("routes").innerHTML = h;
-        $("fallback").className = "fallback show";
-    }
-    function set(id, text, cls) {
-        var el = $(id);
-        el.textContent = text;
-        el.className = cls || "";
-    }
-    function stamp(text, color) {
-        var el = $("stamp");
-        el.textContent = text;
-        if (color) el.style.borderColor = color, el.style.color = color;
+
+    /* Where one press actually goes. Each of these destinations starts the
+       chain on load: there is no second screen to navigate. */
+    function target(r, p) {
+        if (r.dir === "1400") {
+            return "1400/" + (p === "ps4hen" ? "?payload=hen.bin" : "?mode=goldhen");
+        }
+        return r.dir === "css/version-selector.html" ? r.dir : r.dir + "/";
     }
 
-    var btn = $("btn");
+    var payload = "goldhen";
+    var forced = null;
+    var picked = null;
+    var btn = $("go");
 
-    if (!isPS4()) {
-        stamp("FORA DE CASA", "#fde047");
-        set("dev", "isto nao e uma PS4", "warn");
-        set("fw", "—");
-        set("compat", "abre na consola, campeao", "warn");
-        $("joke").textContent = "Detectamos um dispositivo civil. O desbloqueio so funciona na PS4.";
-        btn.textContent = "Abre na PS4";
-        showFallback();
-        return;
+    function show(title, sub, cls) {
+        $("title").textContent = title;
+        $("title").style.color = cls === "ok" ? "#7fe0a6" : cls === "bad" ? "#ff9d9d" : "";
+        $("sub").textContent = sub || "";
     }
 
-    set("dev", "PlayStation 4", "ok");
-    var fw = getFw();
-    if (!fw) {
-        stamp("DUVIDA", "#fde047");
-        set("fw", "desconhecido", "warn");
-        set("compat", "escolhe em baixo", "warn");
-        $("joke").textContent = "O firmware escondeu-se. Escolhe a mao — nao faz mal a ninguem.";
-        btn.textContent = "Firmware nao detectado";
-        showFallback();
-        return;
-    }
-    set("fw", fw, "ok");
-
-    var r = route(fw);
-    if (!r) {
-        stamp("REPROVADO", "#fb7185");
-        set("compat", "nao suportado", "bad");
-        $("joke").textContent = pick(JOKES_BAD);
-        btn.textContent = "FW " + fw + " fora da lista";
-        return;
+    function buildFwList() {
+        var h = '<a href="#" class="row" data-fw="">Autom&aacute;tico</a>';
+        for (var i = 0; i < ROUTES.length; i++) {
+            h += '<a href="#" class="row" data-i="' + i + '">' + ROUTES[i].label + '</a>';
+        }
+        $("flist").innerHTML = h;
     }
 
-    stamp("APROVADO", "#86efac");
-    set("compat", "pode desbloquear", "ok");
-    $("joke").textContent = pick(JOKES_OK);
-    btn.disabled = false;
-    btn.textContent = "Desbloquear";
-    btn.onclick = function () { location.href = r.href; };
-    btn.focus();
-})();
+    function markActive() {
+        var rows = $("plist").getElementsByTagName("a");
+        for (var i = 0; i < rows.length; i++) {
+            rows[i].className = "row" + (rows[i].getAttribute("data-p") === payload ? " on" : "");
+        }
+        var fr = $("flist").getElementsByTagName("a");
+        for (var j = 0; j < fr.length; j++) {
+            var idx = fr[j].getAttribute("data-i");
+            var on = (idx === null && !forced) || (forced && String(ROUTES.indexOf(forced)) === idx);
+            fr[j].className = "row" + (on ? " on" : "");
+        }
+    }
+
+    function render() {
+        markActive();
+        btn.className = "btn";
+
+        var fw = getFw();
+        var r = forced || route(fw || "");
+
+        if (!isPS4() && !forced) {
+            show("Abre na PS4", "Este desbloqueio s\u00f3 funciona no browser da consola.", "bad");
+            $("fwtxt").innerHTML = "&nbsp;";
+            btn.disabled = true;
+            btn.textContent = "Abre na PS4";
+            return;
+        }
+
+        if (!r) {
+            show("Firmware n\u00e3o suportado", "Sem desbloqueio para este firmware.", "bad");
+            $("fwtxt").textContent = fw ? "PS4 \u00b7 " + fw : "";
+            btn.disabled = true;
+            btn.textContent = "Sem desbloqueio";
+            return;
+        }
+
+        var p = payload;
+        if (p === "ps4hen" && r.dir !== "1400") p = "goldhen";
+
+        picked = target(r, p);
+        $("fwtxt").textContent = "PS4 \u00b7 " + r.label;
+        show("Desbloqueio",
+            (p === "ps4hen" ? "PS4HEN" : "GoldHEN") + " \u00b7 firmware " + r.label,
+            "");
+        btn.disabled = false;
+        btn.textContent = "Desbloquear";
+    }
+
+    btn.onclick = function () {
+        if (!picked) return;
+        btn.disabled = true;
+        btn.className = "btn go";
+        btn.textContent = "A desbloquear\u2026";
+        $("sub").textContent = "N\u00e3o feches o browser.";
+        setTimeout(function () { location.href = picked; }, 200);
+    };
+
+    $("optlink").onclick = function (ev) {
+        ev.preventDefault();
+        var p = $("panel");
+        var open = p.className.indexOf("open") !== -1;
+        p.className = open ? "panel" : "panel open";
+        this.textContent = open ? "op\u00e7\u00f5es" : "fechar";
+    };
+
+    $("plist").onclick = function (ev) {
+        var a = ev.target;
+        if (!a || !a.getAttribute || !a.getAttribute("data-p")) return;
+        ev.preventDefault();
+        payload = a.getAttribute("data-p");
+        render();
+    };
+
+    $("flist").onclick = function (ev) {
+        var a = ev.target;
+        if (!a || !a.getAttribute) return;
+        var idx = a.getAttribute("data-i");
+        if (idx === null && !a.getAttribute("data-fw")) return;
+        ev.preventDefault();
+        forced = idx === null || idx === "" ? null : ROUTES[parseInt(idx, 10)];
+        render();
+    };
+
+    buildFwList();
+    render();
+}());
 </script>
 </body>
 </html>
