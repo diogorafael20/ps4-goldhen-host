@@ -41,7 +41,7 @@
     }
 
     UI.mount({ fw: key || "", msg: "Preparing\u2026" });
-    UI.set(3, "Checking the console\u2026");
+    UI.set(0, "Checking the console\u2026");
 
     if (fwnum === 1101 || fwnum === 1102) {
         location.replace("../css/version-selector.html");
@@ -68,7 +68,7 @@
     function go() {
         if (launched) return;
         launched = true;
-        UI.set(8, "Unlocking\u2026");
+        UI.set(0, "Unlocking\u2026");
         location.replace(target);
     }
 
@@ -78,7 +78,7 @@
     function run() {
         if (sessionGet(PRE) !== "yes") {
             if (!sessionSet(PRE, "yes")) { go(); return; }
-            UI.set(5, "Cleaning the page state\u2026");
+            UI.set(0, "Cleaning the page state\u2026");
             setTimeout(function () { location.reload(); }, 700);
             return;
         }
@@ -98,7 +98,7 @@
         sessionSet(PRE, "yes");
         if (sessionGet(RELOADED) === "yes") { sessionRemove(RELOADED); run(); return; }
         sessionSet(RELOADED, "yes");
-        UI.set(5, "Files ready \u2014 reloading\u2026");
+        UI.set(0, "Files ready \u2014 reloading\u2026");
         setTimeout(function () { location.reload(); }, 700);
     }
 
@@ -113,9 +113,9 @@
         return;
     }
 
-    ac.addEventListener("downloading", function () { UI.set(5, "Saving the files\u2026"); }, false);
+    ac.addEventListener("downloading", function () { UI.set(0, "Saving the files\u2026"); }, false);
     ac.addEventListener("progress", function (e) {
-        if (e && e.total > 0) UI.set(5, "A guardar " + Math.round(e.loaded / e.total * 100) + "%");
+        if (e && e.total > 0) UI.set(0, "Saving " + Math.round(e.loaded / e.total * 100) + "%");
     }, false);
     ac.addEventListener("cached", function () { fresh(false); }, false);
     ac.addEventListener("updateready", function () { fresh(true); }, false);
@@ -146,7 +146,7 @@
     } else if (ac.status === ac.UPDATEREADY) {
         fresh(true);
     } else if (ac.status === ac.CHECKING || ac.status === ac.DOWNLOADING || ac.status === ac.UNCACHED) {
-        UI.set(4, "Checking the files\u2026");
+        UI.set(0, "Checking the files\u2026");
         watchdog = setTimeout(function () {
             if (!finish()) return;
             if (bug === "poops") {
