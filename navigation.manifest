@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# ps4-unlock-host-20261123-v7-local
+# ps4-unlock-host-20261123-v8-ui
 # local host build
 
 CACHE:
@@ -10,7 +10,6 @@ icon.png
 900/version-selector.html
 css/version-selector.html
 ui.js
-notice.html
 simple.js
 
 NETWORK:
