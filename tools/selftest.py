@@ -97,13 +97,7 @@ def bad_inline_script(work):
     edit(page, "var UI = window.HostUI;", "var UI = window.HostUI(;")
 
 
-def unreadable_file(work):
-    os.chmod(os.path.join(work, "ui.js"), 0o600)
-
-
 def main():
-    case("published file unreadable by the server", unreadable_file,
-         "not readable by other users", "ui.js")
     case("manifest lists a deleted file", drop_cached_file,
          "does not exist", "1352/cache.manifest")
     case("chain element renamed", rename_chain_element,

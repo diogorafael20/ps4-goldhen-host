@@ -44,4 +44,11 @@ RUN rm -rf /usr/share/nginx/html/tools \
            /usr/share/nginx/html/docker-compose.yml \
            /usr/share/nginx/html/.dockerignore
 
+# Normalise modes. A checkout made under a restrictive umask (0077 is common on
+# servers) arrives as 0600, and nginx runs as another user: it answers 403 for
+# files that exist, which looks exactly like a missing page. Do not rely on the
+# mode the files happened to have here.
+RUN find /usr/share/nginx/html -type d -exec chmod 755 {} + \
+    && find /usr/share/nginx/html -type f -exec chmod 644 {} +
+
 EXPOSE 80

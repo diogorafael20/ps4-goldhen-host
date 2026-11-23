@@ -262,21 +262,48 @@ def check_reports():
 
 
 def check_permissions():
-    """Every published file must be readable by the server's user.
+    """Notes files a server running as another user could not read.
 
-    The commit mode is what a clone gets, and a file committed as 600 is
-    unreadable to nginx (a different user) -- it answers 403, so a page that
-    exists looks missing. This has happened, which is why it is checked.
+    This cannot be a repository defect: git records only 644 or 755, and
+    `git update-index --cacheinfo` normalises 600 to 644, so a clone is always
+    readable. The failure is local -- a checkout made under a restrictive umask
+    (0077 is common) is 600 on disk, and `docker build` copies that mode into
+    the image, where nginx runs as another user and answers 403 for a file that
+    exists. The Dockerfile chmods the tree for that reason, and `serve.py` runs
+    as the owner so it is unaffected.
+
+    Reported as a note rather than a failure, because nothing in the repository
+    can fix a local umask -- but silence would leave the next person debugging
+    a 403 that looks like a missing page.
     """
-    for base, dirs, files in os.walk(ROOT):
-        dirs[:] = [d for d in dirs if d not in (".git", ".github")]
-        for f in files:
-            path = os.path.join(base, f)
-            mode = os.stat(path).st_mode
+    try:
+        listed = subprocess.run(["git", "ls-files", "-s"], cwd=ROOT,
+                                capture_output=True, text=True)
+        entries = listed.stdout.splitlines() if listed.returncode == 0 else []
+    except OSError:
+        entries = []
+
+    if not entries:
+        notes.append("not a git checkout: local file modes were not inspected")
+        return
+
+    blocked = []
+    for line in entries:
+        parts = line.split()
+        if len(parts) < 4:
+            continue
+        path = parts[3]
+        full = os.path.join(ROOT, path)
+        if os.path.exists(full):
+            mode = os.stat(full).st_mode & 0o777
             if not (mode & 0o004):
-                fail("%s is not readable by other users (mode %o), so a server "
-                     "running as a different user returns 403"
-                     % (rel(path), mode & 0o777))
+                blocked.append(path)
+
+    if blocked:
+        notes.append("%d file(s) in this checkout are mode 600 (umask %03o), "
+                     "which a container would serve as 403; the Dockerfile "
+                     "normalises them, and a clone is unaffected: %s"
+                     % (len(blocked), os.umask(0), ", ".join(sorted(blocked)[:4])))
 
 
 def main():
