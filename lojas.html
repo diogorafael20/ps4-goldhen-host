@@ -6,121 +6,93 @@
     <title>doesitworknow · lojas</title>
     <link rel="icon" type="image/png" href="pspulse.png">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background: #111827;
-            color: #fff;
-            font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
-            padding: 28px 20px 48px;
-            max-width: 720px;
-            margin: 0 auto;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 24px 18px 40px;
+            margin: 0;
         }
         a { color: #93c5fd; }
-        .top { margin-bottom: 22px; }
-        .top a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 15px; }
-        h1 { font-size: 28px; font-weight: 700; letter-spacing: -.02em; }
+        h1 { font-size: 28px; color: #ffffff; margin: 0 0 8px 0; }
         h1 span { color: #3b82f6; }
-        .lead {
-            margin-top: 10px;
-            color: rgba(255,255,255,0.65);
-            font-size: 16px;
-            line-height: 1.5;
-        }
+        h2 { font-size: 20px; color: #ffffff; margin: 0 0 8px 0; }
+        .lead { color: #cccccc; font-size: 16px; margin: 0 0 16px 0; line-height: 1.4; }
         .note {
-            margin-top: 16px;
-            padding: 12px 14px;
             background: #1f2937;
-            border-radius: 10px;
-            color: rgba(255,255,255,0.7);
-            font-size: 14px;
-            line-height: 1.5;
+            padding: 12px;
+            margin: 0 0 16px 0;
+            color: #dddddd;
+            font-size: 15px;
+            line-height: 1.45;
         }
         .card {
-            display: block;
-            margin-top: 14px;
-            padding: 16px 16px 14px;
             background: #1f2937;
-            border-radius: 12px;
-            text-decoration: none;
-            color: inherit;
+            padding: 14px;
+            margin: 0 0 12px 0;
+            color: #ffffff;
         }
-        .card:hover, .card:focus { background: #374151; outline: none; }
-        .card h2 { font-size: 19px; font-weight: 650; margin-bottom: 6px; }
-        .card p { color: rgba(255,255,255,0.62); font-size: 14px; line-height: 1.45; }
-        .tag {
-            display: inline-block;
-            margin-top: 10px;
-            font-size: 12px;
-            color: #4ade80;
-            font-weight: 600;
-        }
-        .tag.warn { color: #fbbf24; }
-        .steps {
-            margin-top: 28px;
-            padding-top: 8px;
-        }
-        .steps h2 { font-size: 18px; margin-bottom: 10px; }
-        .steps ol {
-            padding-left: 22px;
-            color: rgba(255,255,255,0.75);
-            font-size: 15px;
-            line-height: 1.65;
-        }
-        .ver { margin-top: 28px; font-size: 12px; color: rgba(255,255,255,0.35); }
+        .card .title { font-size: 20px; font-weight: bold; color: #ffffff; margin: 0 0 6px 0; }
+        .card .desc { font-size: 15px; color: #cccccc; margin: 0 0 10px 0; line-height: 1.4; }
+        .card .tag { font-size: 13px; color: #4ade80; margin: 0 0 8px 0; }
+        .card .tag.warn { color: #fbbf24; }
+        .card .go { font-size: 17px; color: #93c5fd; }
+        .steps { margin-top: 22px; color: #dddddd; font-size: 15px; line-height: 1.55; }
+        .steps h2 { margin-bottom: 8px; }
+        .back { margin-bottom: 18px; font-size: 16px; }
+        .ver { margin-top: 24px; font-size: 12px; color: #888888; }
     </style>
 </head>
 <body>
-    <div class="top"><a href="./">← activate</a></div>
+    <div class="back"><a href="./">Voltar ao activate</a></div>
 
     <h1>lojas<span>.</span></h1>
-    <p class="lead">Depois do jailbreak + GoldHEN. Só homebrew free de fontes públicas. Instala com Package Installer (Debug Settings).</p>
+    <p class="lead">Depois do jailbreak + GoldHEN. Homebrew free. Instala com Package Installer (Debug Settings).</p>
 
     <div class="note">
-        Ordem recomendada: <b>1) Homebrew Store</b> → <b>2) Itemzflow</b> → <b>3) FPKGi</b>.
-        Listas tipo «DPLAY / Infinity» não têm fonte oficial verificável aqui — no FPKGi podes apontar as tuas próprias listas JSON.
+        Ordem: 1) Homebrew Store &nbsp; 2) Itemzflow &nbsp; 3) FPKGi.<br>
+        DPLAY / Infinity: sem fonte oficial aqui — no FPKGi podes meter as tuas listas JSON.
     </div>
 
-    <a class="card" href="https://pkg-zone.com/page/install-hb-store">
-        <h2>Homebrew Store (PKG-Zone)</h2>
-        <p>Loja free da cena (LightningMods). Instala apps homebrew e actualiza-se sozinha. Melhor ponto de partida.</p>
-        <span class="tag">recomendado · free</span>
-    </a>
+    <div class="card">
+        <div class="title">1. Homebrew Store (PKG-Zone)</div>
+        <div class="desc">Loja free (LightningMods). Instala apps homebrew e actualiza-se. Melhor ponto de partida.</div>
+        <div class="tag">recomendado · free</div>
+        <a class="go" href="https://pkg-zone.com/page/install-hb-store">Abrir pagina da HB-Store</a><br>
+        <a class="go" href="http://pkg-zone.com/install">Instalar HB-Store na PS4 (com GoldHEN)</a>
+    </div>
 
-    <a class="card" href="https://pkg-zone.com/details/ITEM00001">
-        <h2>Itemzflow</h2>
-        <p>Gestor de jogos / menu alternativo (open source). Dumps, patches, instalação de PKGs. Também via Homebrew Store.</p>
-        <span class="tag">free · open source</span>
-    </a>
+    <div class="card">
+        <div class="title">2. Itemzflow</div>
+        <div class="desc">Gestor de jogos / menu alternativo (open source). Dumps, patches, PKGs. Tambem via Homebrew Store.</div>
+        <div class="tag">free · open source</div>
+        <a class="go" href="https://pkg-zone.com/details/ITEM00001">Abrir Itemzflow no PKG-Zone</a>
+    </div>
 
-    <a class="card" href="https://github.com/ItsJokerZz/FPKGi/releases/latest">
-        <h2>FPKGi</h2>
-        <p>Browser/instalador de PKGs via listas JSON (GitHub / NAS / web). Ideal para o teu conteúdo. PKG: FPKGi_v1.10.0-release.pkg</p>
-        <span class="tag">free · open source</span>
-    </a>
+    <div class="card">
+        <div class="title">3. FPKGi</div>
+        <div class="desc">Browser/instalador de PKGs via listas JSON (GitHub / NAS / web). PKG: FPKGi_v1.10.0-release.pkg</div>
+        <div class="tag">free · open source</div>
+        <a class="go" href="https://github.com/ItsJokerZz/FPKGi/releases/latest">Download FPKGi (GitHub)</a>
+    </div>
 
-    <a class="card" href="https://store.brewology.com/ps4/fpkgi/">
-        <h2>FPKGi+</h2>
-        <p>Variante com lista curada de homebrew open source (emuladores, Apollo, etc.). Sem jogos incluídos.</p>
-        <span class="tag">free · brewology</span>
-    </a>
-
-    <a class="card" href="https://pkg-zone.com/install">
-        <h2>Instalar HB-Store na consola</h2>
-        <p>Com GoldHEN activo, abre este link no browser da PS4 — instala a Homebrew Store directamente (quando a net da casa estiver ok).</p>
-        <span class="tag warn">requer GoldHEN + net</span>
-    </a>
+    <div class="card">
+        <div class="title">4. FPKGi+</div>
+        <div class="desc">Lista curada de homebrew open source (emuladores, Apollo, etc.). Sem jogos incluidos.</div>
+        <div class="tag">free · brewology</div>
+        <a class="go" href="https://store.brewology.com/ps4/fpkgi/">Abrir FPKGi+ no Brewology</a>
+    </div>
 
     <div class="steps">
         <h2>Como instalar um PKG</h2>
         <ol>
             <li>GoldHEN carregado (FW Update Block ligado).</li>
-            <li>USB exFAT/FAT32 com o <code>.pkg</code> na raiz <b>ou</b> Remote Package Install.</li>
-            <li>Definições → ★ GoldHEN ★ / Debug Settings → Game → Package Installer.</li>
-            <li>Fonte: USB <code>usb:/</code> (ou HDD <code>/data/pkg</code>).</li>
+            <li>USB exFAT/FAT32 com o .pkg na raiz, ou Remote Package Install.</li>
+            <li>Definicoes → GoldHEN / Debug Settings → Game → Package Installer.</li>
+            <li>Fonte: USB usb:/ (ou HDD /data/pkg).</li>
         </ol>
     </div>
 
-    <div class="ver">doesitworknow · lojas v1</div>
+    <div class="ver">doesitworknow · lojas v2 (PS4 browser)</div>
 </body>
 </html>
