@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt" manifest="cache.manifest">
+<html lang="en" manifest="cache.manifest">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Desbloqueio</title>
+<title>Unlock</title>
 <link rel="icon" type="image/png" href="../pspulse.png">
 </head>
 <body>
@@ -26,43 +26,43 @@
     /* Stages in the order this chain reaches them. A stage only moves the
        bar forward; nothing here can claim more than the chain has done. */
     var STAGES = [
-        [/running the primitive|setting up/, 12, "A preparar o exploit\u2026"],
+        [/running the primitive|setting up/, 12, "Preparing the exploit\u2026"],
         [/bringing up|workers/, 18, null],
-        [/sweeping/, 26, "A procurar a falha na mem\u00f3ria\u2026"],
+        [/sweeping/, 26, "Looking for the memory flaw\u2026"],
         [/attempt \d+/, 32, null],
-        [/leaking a kqueue/, 44, "A recolher informa\u00e7\u00e3o do sistema\u2026"],
+        [/leaking a kqueue/, 44, "Gathering system information\u2026"],
         [/kread_slow/, 54, null],
-        [/make_karw/, 60, "A abrir caminho para o kernel\u2026"],
-        [/sandbox escape/, 68, "A sair da sandbox\u2026"],
+        [/make_karw/, 60, "Opening a path into the kernel\u2026"],
+        [/sandbox escape/, 68, "Leaving the sandbox\u2026"],
         [/remove_uaf_file/, 74, null],
-        [/kernel patches/, 86, "A aplicar os patches\u2026"],
-        [/payload\.\.\./, 94, "A carregar o GoldHEN\u2026"]
+        [/kernel patches/, 86, "Applying the patches\u2026"],
+        [/payload\.\.\./, 94, "Loading GoldHEN\u2026"]
     ];
 
     function judge(t) {
         if (!t || UI.isDone()) return;
         if (/ALL DONE/.test(t)) {
-            UI.done("Desbloqueio realizado", "o GoldHEN est\u00e1 a correr");
+            UI.done("Unlock complete", "GoldHEN is running");
             return;
         }
         if (/ALREADY JAILBROKEN/.test(t)) {
-            UI.done("Desbloqueio realizado", "j\u00e1 estava desbloqueada");
+            UI.done("Unlock complete", "it was already unlocked");
             return;
         }
         if (/REBOOT/.test(t)) {
-            UI.fail("Falhou", "desliga a PS4 e volta a ligar antes de repetir");
+            UI.fail("Failed", "power the console off and on before trying again");
             return;
         }
         if (/no win in|REBOOT FIRST/.test(t)) {
-            UI.fail("Falhou", "reabre o browser e tenta outra vez");
+            UI.fail("Failed", "close and reopen the browser, then try again");
             return;
         }
         if (/no offsets/.test(t)) {
-            UI.fail("Firmware n\u00e3o suportado", "este desbloqueio n\u00e3o serve para esta consola");
+            UI.fail("Firmware not supported", "this unlock does not apply to this console");
             return;
         }
         if (/FAILED/.test(t)) {
-            UI.fail("Falhou", "reabre o browser e tenta outra vez");
+            UI.fail("Failed", "close and reopen the browser, then try again");
             return;
         }
         for (var i = 0; i < STAGES.length; i++) {

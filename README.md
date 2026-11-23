@@ -1,34 +1,50 @@
-# PS4 exploit host
+# does it work now?
 
-Static host for a personal PS4, served from GitHub Pages. One page, one
-button: it reads the firmware from the console's user agent, picks the folder
-that has offsets for it, and starts the chain.
+A personal exploit host for one PlayStation 4, served from GitHub Pages.
+One screen, one button. It reads the firmware from the console's own user
+agent, picks the folder that carries offsets for it, and runs the chain.
 
-## Using it
+```
+        open the URL  ->  press Desbloquear  ->  100%  ->  done
+```
 
-On the console: open the URL, press **Desbloquear**, wait. The screen shows a
-percentage; it reaches 100 and says *Desbloqueio realizado* only when the
-payload is actually running. If it fails, the screen says what to do next —
-either retry, or reboot the console.
+No file manager, no payload menu, no log to read. If a run fails the screen
+says which of the two things to do next: retry, or power-cycle the console.
 
-Options (a small link under the button) let you pick GoldHEN or PS4HEN and
-force a firmware, for when detection is not possible.
+> **Read this first.** This repository exists for educational purposes and for
+> testing on hardware I own. See [NOTICE.md](NOTICE.md). Running an exploit
+> changes the security state of your console, can corrupt its storage, and can
+> get a PSN account banned. Use it on a console you are willing to lose.
 
-## Layout
+## What it does
 
-| Path | Firmware | Chain |
+| Firmware | Folder | Chain |
 |---|---|---|
-| `1300/` | 11.00 – 13.00 | Lapse / Poops |
-| `1352/` | 13.02 – 13.52 | Slopkit + GoldHEN |
-| `1400/` | 14.00 – 14.02 | afterglow |
-| `900/` | 9.00 – 9.60 | PSFree |
-| `700/` | 7.00 – 8.52 | PSFree |
-| `672/` | 6.72 | Lapse |
-| `505/` | 5.05 | Lapse |
-| `css/` | 6.00 – 11.02 | CSSFontFace |
+| 14.00 – 14.02 | `1400/` | afterglow |
+| 13.02 – 13.52 | `1352/` | Slopkit |
+| 11.00 – 13.00 | `1300/` | Lapse / Poops |
+| 9.00 – 9.60 | `900/` | PSFree |
+| 7.00 – 8.52 | `700/` | PSFree |
+| 6.72 | `672/` | Lapse |
+| 5.05 | `505/` | Lapse |
+| 6.00 – 11.02 | `css/` | CSSFontFace |
 
 `index.html` holds the firmware-to-folder table. `ui.js` is the shared
-percentage screen; `simple.js` adapts the older vendor pages to it.
+progress screen. `simple.js` adapts the older vendor pages to it.
+
+The chains are not modified — this repository is the front door and the
+packaging, not the research. Credit for each belongs to its authors, named in
+each folder.
+
+## The screen
+
+A percentage, a bar, and one sentence. The number is driven by checkpoints
+the chain already emits, so it never claims more than the chain has done: it
+holds at 99 until the payload is running, then goes to 100 and says
+*Desbloqueio realizado*.
+
+Options sit behind a small link: GoldHEN or PS4HEN, and a manual firmware
+choice for when detection is not possible.
 
 ## Validation
 
@@ -39,30 +55,34 @@ python3 tools/check.py      # structure, links, manifests, chain DOM, syntax
 python3 tools/selftest.py   # proves check.py still catches each known failure
 ```
 
-`check.py` cannot tell whether an exploit still works on a console — nothing
-outside a console can. What it catches are the failures a console reports as a
-blank screen or a dead button, which is what an edit tends to break:
+What that can and cannot tell you: it cannot tell whether an exploit still
+works on a console — nothing outside a console can. It catches what an edit
+tends to break, which a console reports as a blank screen or a dead button:
 
-- a manifest that caches a file that no longer exists
+- a manifest caching a file that no longer exists
 - a link to a renamed page
-- a chain page that lost an element its script writes to by name
+- a chain page missing an element its script writes to by name
 - a route sending a firmware to a folder whose offset table lacks it
 - a payload blob lost or emptied in a merge
 - a syntax error, in a file or in an inline script
 
-Run both before pushing. Green means the host is intact, not that a firmware
-is exploitable.
+`tools/selftest.py` breaks the repository six ways in a temporary copy and
+requires the checker to fail each time. A checker that always passes is worse
+than none, because it gets trusted.
+
+Green means the host is intact, not that a firmware is exploitable.
 
 ## Cache
 
-The console caches aggressively and there are no HTTP headers to set on GitHub
-Pages, so each folder carries an HTML5 application cache manifest. Editing a
-file without bumping its manifest leaves consoles on the old copy; the
-manifest must change for the browser to refetch. `1400/make-manifest.sh`
-rebuilds its own from content hashes — run it after editing anything in that
-folder.
+The console caches aggressively and GitHub Pages sets no headers, so each
+folder carries an HTML5 application cache manifest. Editing a file without
+bumping its manifest leaves consoles on the old copy — the manifest itself
+must change for the browser to refetch. `1400/make-manifest.sh` rebuilds its
+own from content hashes.
 
-## Source
+## Where the pieces came from
 
 Host assets from `ghcr.io/chrisser73/ps4-host-offline-goldhen` (PSPulse).
-Exploit chains by their respective authors; see each folder.
+Exploit chains, patches and payloads by their respective authors. This
+repository is not affiliated with Sony Interactive Entertainment, and
+"PlayStation" is used only to say what the thing runs on.

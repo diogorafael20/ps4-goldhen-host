@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="pt" manifest="cache.appcache">
+<html lang="en" manifest="cache.appcache">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Desbloqueio</title>
+<title>Unlock</title>
 </head>
 <body>
 <!-- jb.js reads and writes these by name; they stay out of sight. -->
@@ -29,36 +29,36 @@
     function judge(t) {
         if (!t || UI.isDone()) return;
         if (/done -- jailbroken, rwx open, syscall 11 is a kexec gate, enabler running/.test(t)) {
-            UI.done("Desbloqueio realizado", "o GoldHEN est\u00e1 a correr");
+            UI.done("Unlock complete", "GoldHEN is running");
             return;
         }
         if (/no kernel stage for firmware|is not supported/.test(t)) {
-            UI.fail("Firmware n\u00e3o suportado", "este desbloqueio n\u00e3o serve para esta consola");
+            UI.fail("Firmware not supported", "this unlock does not apply to this console");
             return;
         }
         if (/do not close this page, cold boot|handles are NOT defused/.test(t)) {
-            UI.fail("Falhou", "desliga a PS4 e volta a ligar antes de repetir");
+            UI.fail("Failed", "power the console off and on before trying again");
             return;
         }
         if (/gave up after|exploit failed|AG-FAIL/.test(t)) {
-            UI.fail("Falhou", "reabre o browser e tenta outra vez");
+            UI.fail("Failed", "close and reopen the browser, then try again");
             return;
         }
         if (/kernel interface is live/.test(t)) {
-            UI.fail("Falhou", "a consola ficou desbloqueada mas o GoldHEN n\u00e3o arrancou; reinicia e tenta outra vez");
+            UI.fail("Failed", "the console is unlocked but GoldHEN did not start; reboot and try again");
             return;
         }
 
         var pct = 0, msg = "";
-        if (/\[g\]|\[p\]|\[e\]|\[10\]/.test(t)) { pct = 96; msg = "A carregar o GoldHEN\u2026"; }
-        else if (/\[9\]/.test(t)) { pct = 84; msg = "A obter acesso root\u2026"; }
-        else if (/\[8\]/.test(t)) { pct = 76; msg = "A aplicar os patches\u2026"; }
-        else if (/\[7\]/.test(t)) { pct = 66; msg = "A localizar o kernel\u2026"; }
-        else if (/\[6\]/.test(t)) { pct = 58; msg = "A abrir caminho para o kernel\u2026"; }
-        else if (/\[5\]/.test(t)) { pct = 48; msg = "A preparar a mem\u00f3ria\u2026"; }
-        else if (/\[4\]/.test(t)) { pct = 40; msg = "A preparar a mem\u00f3ria\u2026"; }
-        else if (/attempt \d+/.test(t)) { pct = 24; msg = "A explorar a falha\u2026"; }
-        else { pct = 12; msg = "A preparar o exploit\u2026"; }
+        if (/\[g\]|\[p\]|\[e\]|\[10\]/.test(t)) { pct = 96; msg = "Loading GoldHEN\u2026"; }
+        else if (/\[9\]/.test(t)) { pct = 84; msg = "Getting root access\u2026"; }
+        else if (/\[8\]/.test(t)) { pct = 76; msg = "Applying the patches\u2026"; }
+        else if (/\[7\]/.test(t)) { pct = 66; msg = "Locating the kernel\u2026"; }
+        else if (/\[6\]/.test(t)) { pct = 58; msg = "Opening a path into the kernel\u2026"; }
+        else if (/\[5\]/.test(t)) { pct = 48; msg = "Preparing memory\u2026"; }
+        else if (/\[4\]/.test(t)) { pct = 40; msg = "Preparing memory\u2026"; }
+        else if (/attempt \d+/.test(t)) { pct = 24; msg = "Exploiting the flaw\u2026"; }
+        else { pct = 12; msg = "Preparing the exploit\u2026"; }
         if (pct) UI.set(pct, msg);
     }
 

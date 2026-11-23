@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt" manifest="cache.manifest">
+<html lang="en" manifest="cache.manifest">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Desbloqueio</title>
+<title>Unlock</title>
 <link rel="icon" type="image/png" href="../pspulse.png">
 </head>
 <body>
@@ -22,49 +22,49 @@
     UI.mount({ fw: window.HOST_FW || "", logEl: out });
 
     var STAGES = [
-        [/running the primitive|setting up/, 10, "A preparar o exploit\u2026"],
+        [/running the primitive|setting up/, 10, "Preparing the exploit\u2026"],
         [/wiring the worker/, 16, null],
         [/aio batches|dry run/, 20, null],
-        [/racing/, 28, "A explorar a falha\u2026"],
+        [/racing/, 28, "Exploiting the flaw\u2026"],
         [/leaking kernel addresses/, 36, null],
-        [/stage 3/, 44, "A preparar a mem\u00f3ria\u2026"],
-        [/stage 4/, 52, "A ler a mem\u00f3ria do sistema\u2026"],
+        [/stage 3/, 44, "Preparing memory\u2026"],
+        [/stage 4/, 52, "Reading system memory\u2026"],
         [/stage 5/, 58, null],
-        [/stage 6|KernelView/, 64, "A localizar o kernel\u2026"],
+        [/stage 6|KernelView/, 64, "Locating the kernel\u2026"],
         [/stage 7/, 70, null],
-        [/stage 8/, 78, "A obter acesso root\u2026"],
-        [/stage 9/, 86, "A aplicar os patches\u2026"],
-        [/stage 10/, 94, "A carregar o GoldHEN\u2026"]
+        [/stage 8/, 78, "Getting root access\u2026"],
+        [/stage 9/, 86, "Applying the patches\u2026"],
+        [/stage 10/, 94, "Loading GoldHEN\u2026"]
     ];
 
     function judge(t) {
         if (!t || UI.isDone()) return;
         if (/ALL DONE/.test(t)) {
-            UI.done("Desbloqueio realizado", "o GoldHEN est\u00e1 a correr");
+            UI.done("Unlock complete", "GoldHEN is running");
             return;
         }
         if (/ALREADY JAILBROKEN/.test(t)) {
-            UI.done("Desbloqueio realizado", "j\u00e1 estava desbloqueada");
+            UI.done("Unlock complete", "it was already unlocked");
             return;
         }
         if (/NO REBOOT NEEDED/.test(t)) {
-            UI.fail("Falhou", "a consola ficou desbloqueada mas o GoldHEN n\u00e3o arrancou; reinicia e tenta outra vez");
+            UI.fail("Failed", "the console is unlocked but GoldHEN did not start; reboot and try again");
             return;
         }
         if (/REBOOT/.test(t)) {
-            UI.fail("Falhou", "desliga a PS4 e volta a ligar antes de repetir");
+            UI.fail("Failed", "power the console off and on before trying again");
             return;
         }
         if (/no win in/.test(t)) {
-            UI.fail("Falhou", "reabre o browser e tenta outra vez");
+            UI.fail("Failed", "close and reopen the browser, then try again");
             return;
         }
         if (/no offsets/.test(t)) {
-            UI.fail("Firmware n\u00e3o suportado", "este desbloqueio n\u00e3o serve para esta consola");
+            UI.fail("Firmware not supported", "this unlock does not apply to this console");
             return;
         }
         if (/FAILED/.test(t)) {
-            UI.fail("Falhou", "reabre o browser e tenta outra vez");
+            UI.fail("Failed", "close and reopen the browser, then try again");
             return;
         }
         for (var i = 0; i < STAGES.length; i++) {
@@ -89,7 +89,7 @@
         if (n >= 2) return;
         try { sessionStorage.setItem(RELOAD_KEY, String(n + 1)); } catch (e) { return; }
         var m = document.getElementById("huMsg");
-        if (m) m.textContent = "A mem\u00f3ria n\u00e3o caiu no s\u00edtio certo. A tentar outra vez\u2026";
+        if (m) m.textContent = "The memory did not land in the right place. Trying again\u2026";
         setTimeout(function () { location.reload(); }, 2500);
     }
 
