@@ -1,11 +1,10 @@
 CACHE MANIFEST
-# doesitworknow-activate-20261123-v4-lojas-ps4
-# navigation-v4: lojas HTML simples para browser PS4
+# doesitworknow-activate-20261123-v5-exame
+# so desbloqueio — sem lojas
 
 CACHE:
 ./
 index.html
-lojas.html
 pspulse.png
 700/version-selector.html
 900/version-selector.html

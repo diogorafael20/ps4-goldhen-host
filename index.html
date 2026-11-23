@@ -6,151 +6,137 @@
     <title>doesitworknow</title>
     <link rel="icon" type="image/png" href="pspulse.png">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { height: 100%; }
         body {
-            background: #111827;
-            color: #fff;
-            font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
+            margin: 0;
+            padding: 28px 18px 36px;
+            background: #1a1510;
+            color: #fff8e7;
+            font-family: Arial, Helvetica, sans-serif;
         }
-        a { color: inherit; text-decoration: none; }
+        a { color: #ffd36a; text-decoration: underline; }
 
-        .screen {
-            min-height: 100%;
-            padding: 48px 24px 40px;
-            display: -webkit-box; display: -webkit-flex; display: flex;
-            -webkit-box-orient: vertical; -webkit-flex-direction: column; flex-direction: column;
-            -webkit-box-align: center; -webkit-align-items: center; align-items: center;
-            -webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
+        .wrap {
+            max-width: 520px;
+            margin: 0 auto;
+            border: 3px solid #ffd36a;
+            background: #241c14;
+            padding: 22px 18px 26px;
+        }
+
+        .stamp {
+            display: inline-block;
+            border: 3px solid #5eead4;
+            color: #5eead4;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            padding: 6px 10px;
+            margin-bottom: 14px;
+            -webkit-transform: rotate(-6deg);
+            transform: rotate(-6deg);
+        }
+
+        .brand {
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff8e7;
+            margin: 8px 0 4px 0;
+            line-height: 1.15;
+        }
+        .brand em {
+            font-style: normal;
+            color: #ffd36a;
+        }
+
+        .joke {
+            font-size: 15px;
+            color: #e7d7b8;
+            margin: 0 0 18px 0;
+            line-height: 1.4;
+        }
+
+        .row {
+            background: #31251a;
+            border-left: 6px solid #ffd36a;
+            padding: 10px 12px;
+            margin: 0 0 8px 0;
+            font-size: 16px;
+            line-height: 1.35;
+        }
+        .row b { color: #ffffff; }
+        .ok { color: #86efac; }
+        .warn { color: #fde047; }
+        .bad { color: #fb7185; }
+
+        .btn {
+            display: block;
+            width: 100%;
+            margin-top: 18px;
+            padding: 16px 12px;
+            border: 0;
+            background: #ffd36a;
+            color: #1a1510;
+            font: bold 20px/1.2 Arial, Helvetica, sans-serif;
+            cursor: pointer;
             text-align: center;
         }
-
-        /* Logo */
-        .logo {
-            width: 192px; height: 192px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.05);
-            display: -webkit-box; display: -webkit-flex; display: flex;
-            -webkit-box-align: center; -webkit-align-items: center; align-items: center;
-            -webkit-box-pack: center; -webkit-justify-content: center; justify-content: center;
-            -webkit-transition: background .3s; transition: background .3s;
+        .btn[disabled] {
+            background: #5a4a38;
+            color: #b8a88f;
+            cursor: default;
         }
-        .logo:hover { background: rgba(255,255,255,0.10); }
-        .logo svg { width: 128px; height: 128px; fill: #3b82f6; }
-        .logo.pulse svg { -webkit-animation: pulse 1.6s ease-in-out infinite; animation: pulse 1.6s ease-in-out infinite; }
-        @-webkit-keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
-        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
 
-        h1 { font-size: 34px; font-weight: 700; letter-spacing: -.02em; margin-top: 22px; }
-        h1 span { color: #3b82f6; }
-
-        /* Status */
-        .status {
+        .fallback {
+            display: none;
             margin-top: 18px;
-            font-size: 18px;
-            line-height: 1.7;
-            color: rgba(255,255,255,0.70);
         }
-        .status b { font-weight: 600; color: #fff; }
-        .ok   { color: #4ade80 !important; }
-        .warn { color: #fbbf24 !important; }
-        .bad  { color: #f87171 !important; }
-
-        /* Button */
-        .btn {
-            display: inline-block;
-            margin-top: 26px;
-            min-width: 260px;
-            padding: 16px 34px;
-            border: 0;
-            border-radius: 12px;
-            background: #2563eb;
-            color: #fff;
-            font: 600 20px/1.2 inherit;
-            font-family: inherit;
-            cursor: pointer;
-            -webkit-transition: background .2s; transition: background .2s;
+        .fallback.show { display: block; }
+        .fallback p {
+            color: #e7d7b8;
+            font-size: 14px;
+            margin: 0 0 8px 0;
         }
-        .btn:hover, .btn:focus { background: #3b82f6; outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,.45); }
-        .btn[disabled] { background: #374151; color: rgba(255,255,255,0.45); cursor: default; box-shadow: none; }
-
-        /* Fallback list (only when detection fails) */
-        .fallback { display: none; margin-top: 26px; width: 100%; max-width: 440px; }
-        .fallback p { color: rgba(255,255,255,0.6); font-size: 14px; margin-bottom: 10px; }
         .fallback a {
             display: block;
-            background: #1f2937;
-            border-radius: 10px;
-            padding: 13px 16px;
-            margin-bottom: 8px;
-            font-size: 17px;
-            text-align: left;
-        }
-        .fallback a span { float: right; color: rgba(255,255,255,0.5); font-size: 14px; }
-        .fallback a:hover, .fallback a:focus { background: #374151; outline: none; }
-        .fallback.show { display: block; }
-
-        .after {
-            display: none;
-            margin-top: 22px;
-            width: 100%;
-            max-width: 440px;
-        }
-        .after.show { display: block; }
-        .after a {
-            display: block;
-            margin-top: 10px;
-            padding: 14px 16px;
-            background: #1f2937;
-            border-radius: 10px;
+            background: #31251a;
+            color: #ffd36a;
+            padding: 12px;
+            margin: 0 0 6px 0;
+            text-decoration: none;
             font-size: 16px;
-            color: #93c5fd;
+            border: 1px solid #5a4a38;
         }
-        .after a:hover, .after a:focus { background: #374151; outline: none; }
-        .after p { color: rgba(255,255,255,0.55); font-size: 13px; margin-top: 8px; }
 
-        .ver { position: fixed; right: 16px; bottom: 12px; font-size: 12px; color: rgba(255,255,255,0.35); }
-
-        @media (max-width: 480px) {
-            .logo { width: 150px; height: 150px; }
-            .logo svg { width: 100px; height: 100px; }
-            h1 { font-size: 28px; }
-            .btn { min-width: 0; width: 100%; }
+        .foot {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #a89070;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-<div class="screen">
-    <div class="logo pulse" id="logo">
-        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M0.69116 21.9548C-0.506476 22.7935 -0.284724 24.2384 2.44769 25.1419C5.18011 26.0455 8.35603 26.2323 11.1505 25.729C11.0707 25.729 11.3102 25.729 11.1505 25.729V22.8774L8.43588 23.8C7.39792 24.1355 6.35997 24.2194 5.32202 23.9677C4.5236 23.7161 4.68328 23.2129 5.64139 22.7935L11.1505 20.7806V17.6774L3.48565 20.4452C2.52754 20.7806 1.56943 21.2839 0.69116 21.9548ZM19.2146 9.37419V17.5097C22.4881 19.1871 25.0431 17.5097 25.0431 13.1484C25.0431 8.70323 23.5261 6.69032 19.1348 5.09677C16.8193 4.25806 14.4241 3.50323 12.0288 3V27.2387L17.6178 29V8.61935C17.6178 7.69677 17.6178 7.02581 18.2565 7.27742C19.1348 7.52903 19.2146 8.45161 19.2146 9.37419ZM29.5941 20.0258C27.2787 19.1871 24.8036 18.8516 22.4083 19.1032C21.0779 19.1906 19.8294 19.5869 18.5759 20.0258V23.2968L23.7656 21.2839C24.8036 20.9484 25.8415 20.8645 26.8795 21.1161C27.6779 21.3677 27.5182 21.871 26.5601 22.2903L18.5759 25.3935V28.5806L29.5941 24.3032C30.3925 23.9677 31.1111 23.5484 31.7499 22.8774C32.3088 22.0387 32.0692 20.8645 29.5941 20.0258Z"/></svg>
-    </div>
+<div class="wrap">
+    <div class="stamp" id="stamp">EM ANALISE</div>
+    <div class="brand">does it<br>work <em>now</em>?</div>
+    <p class="joke" id="joke">A abrir o dossier da consola… se passar, ha desbloqueio. Se nao passar, ha desculpas.</p>
 
-    <h1>doesitworknow<span>.</span></h1>
+    <div class="row">Consola: <b id="dev">…</b></div>
+    <div class="row">Firmware: <b id="fw">…</b></div>
+    <div class="row">Veredicto: <b id="compat">…</b></div>
 
-    <div class="status">
-        <div>Dispositivo: <b id="dev">a detectar…</b></div>
-        <div>Firmware: <b id="fw">…</b></div>
-        <div>Compatível: <b id="compat">…</b></div>
-    </div>
-
-    <button type="button" class="btn" id="btn" disabled>A detectar…</button>
-
-    <div class="after" id="after">
-        <a href="lojas.html">Depois: instalar lojas →</a>
-        <p>HB-Store · Itemzflow · FPKGi (com GoldHEN activo)</p>
-    </div>
+    <button type="button" class="btn" id="btn" disabled>A analisar…</button>
 
     <div class="fallback" id="fallback">
-        <p>Escolhe o firmware manualmente:</p>
+        <p>Escolhe o firmware a mao (como no exame oral):</p>
         <div id="routes"></div>
     </div>
+
+    <div class="foot">doesitworknow · so desbloqueio · v4</div>
 </div>
-<div class="ver">activate · v3</div>
 
 <script>
 (function () {
-    // On PS4, prefer HTTP (certificates + bin loaders).
     try {
         var ua0 = navigator.userAgent || "";
         var isLan = /^(127\.|192\.168\.|10\.|172\.(1[6-9]|2\d|3[01])\.)/.test(location.hostname || "");
@@ -173,7 +159,18 @@
         { min: 5.05,  max: 5.05,  href: "505/index.html",             label: "5.05" }
     ];
 
+    var JOKES_OK = [
+        "Aprovado com distinção. A Sony nao precisa de saber.",
+        "Passou no teste. O botao amarelo e a tua responsabilidade agora.",
+        "Consola idonea. Exploit a aquecer os motores."
+    ];
+    var JOKES_BAD = [
+        "Reprovado. Este firmware ainda nao tem o nosso carimbo.",
+        "O dossier ficou a meio. Firmware fora da lista."
+    ];
+
     function $(id) { return document.getElementById(id); }
+    function pick(arr) { return arr[Math.floor(Math.random() * arr.length)] || arr[0]; }
     function isPS4() { return (navigator.userAgent || "").indexOf("PlayStation 4") !== -1; }
     function getFw() {
         var ua = navigator.userAgent || "";
@@ -192,19 +189,29 @@
     function showFallback() {
         var h = "";
         for (var i = 0; i < ROUTES.length; i++)
-            h += '<a href="' + ROUTES[i].href + '">FW ' + ROUTES[i].label + '<span>abrir</span></a>';
+            h += '<a href="' + ROUTES[i].href + '">FW ' + ROUTES[i].label + '</a>';
         $("routes").innerHTML = h;
         $("fallback").className = "fallback show";
     }
-    function set(id, text, cls) { var el = $(id); el.textContent = text; el.className = cls || ""; }
+    function set(id, text, cls) {
+        var el = $(id);
+        el.textContent = text;
+        el.className = cls || "";
+    }
+    function stamp(text, color) {
+        var el = $("stamp");
+        el.textContent = text;
+        if (color) el.style.borderColor = color, el.style.color = color;
+    }
 
-    var dev = $("dev"), btn = $("btn"), logo = $("logo");
-    logo.className = "logo";
+    var btn = $("btn");
 
     if (!isPS4()) {
-        set("dev", "não é uma PS4", "warn");
+        stamp("FORA DE CASA", "#fde047");
+        set("dev", "isto nao e uma PS4", "warn");
         set("fw", "—");
-        set("compat", "abre este site na consola", "warn");
+        set("compat", "abre na consola, campeao", "warn");
+        $("joke").textContent = "Detectamos um dispositivo civil. O desbloqueio so funciona na PS4.";
         btn.textContent = "Abre na PS4";
         showFallback();
         return;
@@ -213,9 +220,11 @@
     set("dev", "PlayStation 4", "ok");
     var fw = getFw();
     if (!fw) {
+        stamp("DUVIDA", "#fde047");
         set("fw", "desconhecido", "warn");
         set("compat", "escolhe em baixo", "warn");
-        btn.textContent = "Firmware não detectado";
+        $("joke").textContent = "O firmware escondeu-se. Escolhe a mao — nao faz mal a ninguem.";
+        btn.textContent = "Firmware nao detectado";
         showFallback();
         return;
     }
@@ -223,24 +232,21 @@
 
     var r = route(fw);
     if (!r) {
-        set("compat", "não", "bad");
-        btn.textContent = "FW " + fw + " não suportado";
+        stamp("REPROVADO", "#fb7185");
+        set("compat", "nao suportado", "bad");
+        $("joke").textContent = pick(JOKES_BAD);
+        btn.textContent = "FW " + fw + " fora da lista";
         return;
     }
 
-    set("compat", "sim", "ok");
+    stamp("APROVADO", "#86efac");
+    set("compat", "pode desbloquear", "ok");
+    $("joke").textContent = pick(JOKES_OK);
     btn.disabled = false;
-    btn.textContent = "Jailbreak";
+    btn.textContent = "Desbloquear";
     btn.onclick = function () { location.href = r.href; };
-    logo.onclick = btn.onclick;
-    $("after").className = "after show";
     btn.focus();
 })();
-// Always offer stores link on non-PS4 / fallback paths too
-try {
-    var after = document.getElementById("after");
-    if (after) after.className = "after show";
-} catch (e2) {}
 </script>
 </body>
 </html>
