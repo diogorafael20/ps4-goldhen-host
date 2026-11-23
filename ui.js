@@ -171,10 +171,12 @@
             box.appendChild(inner);
             (document.body || document.documentElement).appendChild(box);
 
-            /* Carry the bar across the hop from the start page to the run
-               page, so it does not restart at zero halfway through. */
-            var start = opts.start || mounted();
-            if (start > 0 && start < 99) { st.pct = start; paint(); }
+            /* Always start from zero. The bar used to resume from a value left
+               in sessionStorage by an earlier run, so a second unlock began at
+               whatever the last one ended on -- which reads as progress that
+               never happened. A run starts at 0 and earns each step. */
+            st.pct = 0;
+            paint();
             return api;
         },
 
