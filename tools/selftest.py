@@ -69,6 +69,12 @@ def drop_cached_file(work):
     os.remove(os.path.join(work, "1352", "goldhen.bin"))
 
 
+# The alternate 9.xx cache uses its own manifest and must be checked too.
+def add_missing_cached_file(work):
+    edit(os.path.join(work, "900", "cache5.manifest"),
+         "psfree5.js\n", "psfree5.js\nmissing.js\n")
+
+
 # A chain's DOM contract is broken by renaming the element it writes to.
 def rename_chain_element(work):
     page = os.path.join(work, "1352", "jb.html")
@@ -100,6 +106,8 @@ def bad_inline_script(work):
 def main():
     case("manifest lists a deleted file", drop_cached_file,
          "does not exist", "1352/cache.manifest")
+    case("alternate manifest lists a missing file", add_missing_cached_file,
+         "does not exist", "900/cache5.manifest")
     case("chain element renamed", rename_chain_element,
          "which the chain writes to", "id='out'")
     case("route past the offset table", bad_route,

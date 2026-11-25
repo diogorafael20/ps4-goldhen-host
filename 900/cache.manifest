@@ -15,7 +15,6 @@ lapse.js
 loader.js
 payloads.js
 psfree.js
-PSPulse.manifest
 send.js
 kpatch/900.elf
 kpatch/9001.elf
