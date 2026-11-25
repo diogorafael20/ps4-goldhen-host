@@ -633,7 +633,7 @@ function makeRpc(worker) {
         const pid = sc(SYS.getpid).i32;
         mark("PID", String(pid));
 
-        // PSPULSE: skip the kernel exploit when GoldHEN is already active.
+        // skip the kernel exploit when GoldHEN is already active.
         // Re-running the full chain on a jailbroken system only adds panic
         // risk; a cheap getuid/setuid pair decides it up front, before any
         // heavy spray allocations. (Same guard as GamerHack's chain.)

@@ -51,8 +51,8 @@ def html_files():
 
 # ---------------------------------------------------------------- manifests
 
-MANIFEST_NAMES = ("cache.manifest", "cache.appcache", "PSPulse.manifest",
-                  "PSPulse.cache", "navigation.manifest")
+MANIFEST_NAMES = ("cache.manifest", "cache.appcache", "cache5.manifest",
+                  "navigation.manifest")
 
 
 def parse_manifest(path):

@@ -355,7 +355,7 @@ function failed() {
     giveUp("attempt-ceiling");
     return;
   }
-  // PSPULSE: same hygiene as the safe-retry path below — drop the failed
+  // same hygiene as the safe-retry path below — drop the failed
   // attempt's carrier/strings/graphs (unreclaimable without a GC) and give
   // the browser an idle window before the next large allocation. Retrying
   // after 50ms on top of that garbage OOM-kills constrained browsers.

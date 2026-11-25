@@ -399,7 +399,7 @@ let allDone = false;
         check("chain-reaches-kernel", pid > 0,
             "pid=" + pid + " uid=" + sc(SYS.getuid).i32);
 
-        // PSPULSE: skip the kernel exploit when GoldHEN is already active.
+        // skip the kernel exploit when GoldHEN is already active.
         // Re-running the full chain on a jailbroken system only adds panic
         // risk; a cheap getuid/setuid pair decides it up front, before any
         // heavy spray allocations. (Same guard as GamerHack's chain.)

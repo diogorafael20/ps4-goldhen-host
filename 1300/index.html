@@ -104,11 +104,9 @@
 
     var ac = window.applicationCache;
     if (!ac || !document.documentElement.hasAttribute("manifest")) {
-        if (bug === "poops") {
-            UI.fail("The offline files are missing",
-                "clear the browser's site data and open this page again");
-            return;
-        }
+        /* No app cache is not a failure: the chain runs from the network copy
+           of the files. Failing here would block a console that has a working
+           connection but a browser that refuses to cache. */
         run();
         return;
     }
@@ -127,17 +125,14 @@
     ac.addEventListener("error", function () {
         if (!finish()) return;
         sessionRemove(RELOADED);
-        if (bug === "poops") {
-            UI.fail("Could not save the files",
-                "clear the browser's site data and open this page again");
-            return;
-        }
+        /* Cache error is not fatal: go ahead with the online files. The only
+           cost is losing the offline copy, which is not needed while connected. */
         go();
     }, false);
     ac.addEventListener("obsolete", function () {
         if (!finish()) return;
         sessionRemove(RELOADED);
-        UI.fail("Outdated offline files", "clear the browser's site data and open this page again");
+        go();
     }, false);
 
     if (!navigator.onLine) {
@@ -149,10 +144,7 @@
         UI.set(0, "Checking the files\u2026");
         watchdog = setTimeout(function () {
             if (!finish()) return;
-            if (bug === "poops") {
-                UI.fail("Took too long", "clear the browser's site data and open this page again");
-                return;
-            }
+            /* A slow cache must not dead-end the console: continue online. */
             go();
         }, 60000);
     } else {

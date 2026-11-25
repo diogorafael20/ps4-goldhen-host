@@ -111,8 +111,6 @@
         /* Hide the vendor page; the exploit keeps running behind the overlay. */
         var app = document.querySelector(".app");
         if (app) app.style.display = "none";
-        var sup = document.querySelector(".pspulse-support");
-        if (sup) sup.style.display = "none";
 
         UI.mount({ fw: fwFromUa(), msg: "Preparing\u2026", logEl: $("console") || $("log") });
 

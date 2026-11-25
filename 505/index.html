@@ -285,7 +285,10 @@
             function cacheError() {
                 if (!finish()) return;
                 storage505Remove('cached505');
-                status505('Offline cache failed. Check the connection and retry manually.');
+                /* Not fatal: without the offline copy the chain still runs from
+                   the network files while the console is connected. */
+                status505('Offline cache skipped. Starting...');
+                setTimeout(run505Once, 500);
             }
 
             ac.addEventListener('downloading', function () {

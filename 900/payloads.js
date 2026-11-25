@@ -1,4 +1,4 @@
-// Payload delivery helpers for the PSPulse 9.xx host.
+// Payload delivery helpers for the 9.xx host.
 // Keep this file ES5-compatible for the PS4 browser.
 
 var LoadedMSG = "Payload Loaded!";
